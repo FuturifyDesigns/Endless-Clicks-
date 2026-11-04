@@ -99,15 +99,16 @@ export default function EventDetail() {
             capacity={event.capacity}
           />
           <div className="prose">
-            <h2>About the night</h2>
+            <h2>Event details</h2>
             <p>{event.description}</p>
           </div>
         </div>
 
         <div className="detail-panel detail-panel--form">
-          <h2>Register your spot</h2>
+          <h2>Confirm your attendance</h2>
           <p className="muted">
-            Tell us you&apos;re coming — your name lands on the guest list and the live count updates.
+            Register with your name and contact details. Your response is added to the guest
+            list and the public attendance count updates.
           </p>
           <RegisterForm eventId={event.id} disabled={closed} onSuccess={refreshStat} />
         </div>

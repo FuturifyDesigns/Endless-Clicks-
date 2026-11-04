@@ -11,7 +11,6 @@ export default function EventCard({ event, stat, now }) {
   return (
     <article className="event-card">
       <div className="event-card__media">
-        <div className="event-card__glow" />
         <LiveBadge status={status} />
       </div>
       <div className="event-card__body">
@@ -28,7 +27,7 @@ export default function EventCard({ event, stat, now }) {
           capacity={event.capacity}
         />
         <Link className="btn btn--ghost" to={`/events/${event.slug}`}>
-          {status === 'live' ? 'Join the energy' : 'View & register'}
+          {status === 'live' ? 'Event is live' : 'View details & register'}
         </Link>
       </div>
     </article>

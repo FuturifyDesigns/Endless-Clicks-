@@ -119,7 +119,7 @@ export default function RegisterForm({ eventId, disabled, onSuccess }) {
       {message && <p className="form-alert form-alert--ok">{message}</p>}
 
       <button className="btn btn--primary" type="submit" disabled={disabled || submitting}>
-        {disabled ? 'Registration closed' : submitting ? 'Saving...' : "I'm going — register"}
+        {disabled ? 'Registration closed' : submitting ? 'Saving...' : 'Confirm attendance'}
       </button>
     </form>
   )

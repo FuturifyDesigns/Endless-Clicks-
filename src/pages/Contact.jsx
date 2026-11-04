@@ -11,10 +11,10 @@ export default function Contact() {
   useGSAP(
     () => {
       gsap.from('.contact-wrap > *', {
-        y: 24,
+        y: 20,
         opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
+        duration: 0.65,
+        stagger: 0.08,
         ease: 'power2.out',
       })
     },
@@ -31,64 +31,116 @@ export default function Contact() {
       <div className="contact-wrap">
         <header>
           <p className="eyebrow">Contact</p>
-          <h1>Let&apos;s build the next night</h1>
-          <p>
-            Booking an Endless Clicks production, partnership, or private takeover?
-            Send a note — we&apos;ll come back with availability and a planning outline.
+          <h1>Let’s plan the next event properly.</h1>
+          <p className="lead">
+            Use this page for bookings, partnerships, sponsorship enquiries, or questions
+            about hosting, planning, and advertising support from Endless Clicks Pty Ltd.
           </p>
         </header>
 
         <div className="contact-grid">
-          <div className="split-card">
+          <div className="info-card">
             <h2>Studio details</h2>
-            <p>
-              <strong>Email</strong>
-              <br />
-              <a href="mailto:hello@endlessclicks.co.za">hello@endlessclicks.co.za</a>
-            </p>
-            <p>
-              <strong>Coverage</strong>
-              <br />
-              Johannesburg · Cape Town · Durban · nationwide pop-ups
-            </p>
-            <p>
-              <strong>Response window</strong>
-              <br />
-              Typically within 1–2 business days
-            </p>
+            <div className="content-block">
+              <p>
+                <strong>Email</strong>
+                <br />
+                <a href="mailto:hello@endlessclicks.co.za">hello@endlessclicks.co.za</a>
+              </p>
+              <p>
+                <strong>Service areas</strong>
+                <br />
+                Gaborone · Johannesburg · Cape Town · regional pop-ups across Southern Africa
+              </p>
+              <p>
+                <strong>Response time</strong>
+                <br />
+                We aim to reply within 1–2 business days with availability and next steps.
+              </p>
+              <p>
+                <strong>Best information to include</strong>
+              </p>
+              <ul className="list-check">
+                <li>Preferred date or date range</li>
+                <li>City / venue status</li>
+                <li>Expected audience size</li>
+                <li>Event type and outcome you want</li>
+                <li>Whether you need hosting, planning, advertising, or all three</li>
+              </ul>
+            </div>
           </div>
 
-          <form className="register-form" onSubmit={handleSubmit}>
+          <form className="register-form info-card" onSubmit={handleSubmit}>
+            <h2>Send an enquiry</h2>
             <div className="register-form__grid">
               <label>
-                Name
+                Full name
                 <input required name="name" placeholder="Your name" />
               </label>
               <label>
                 Email
-                <input required type="email" name="email" placeholder="you@brand.com" />
+                <input required type="email" name="email" placeholder="you@organisation.com" />
+              </label>
+              <label>
+                Organisation
+                <input name="organisation" placeholder="Company or community" />
+              </label>
+              <label>
+                Phone
+                <input name="phone" placeholder="+267 / +27 ..." />
               </label>
               <label className="register-form__full">
-                What are you planning?
+                Project details
                 <textarea
                   required
-                  rows="5"
+                  rows="6"
                   name="message"
-                  placeholder="Date, city, audience size, vibe..."
+                  placeholder="Date, city, audience size, services needed, and any must-have details..."
                 />
               </label>
             </div>
             {sent ? (
               <p className="form-alert form-alert--ok">
-                Message captured locally — email us at hello@endlessclicks.co.za to confirm.
+                Thanks — your enquiry is ready to send. Please also email
+                hello@endlessclicks.co.za so the team can confirm receipt.
               </p>
             ) : (
               <button className="btn btn--primary" type="submit">
-                Send enquiry
+                Submit enquiry
               </button>
             )}
           </form>
         </div>
+
+        <section className="section" style={{ paddingBottom: 0 }}>
+          <div className="section__head">
+            <p className="eyebrow">Engagement paths</p>
+            <h2>How clients usually start</h2>
+          </div>
+          <div className="services-grid">
+            <article className="info-card">
+              <h3>Single-event support</h3>
+              <p>
+                Ideal when you already have a date and need professional hosting, planning
+                structure, or promotion support for one programme.
+              </p>
+            </article>
+            <article className="info-card">
+              <h3>Season / series</h3>
+              <p>
+                For organisations running multiple events across a quarter. We help standardise
+                registration, messaging, and delivery quality.
+              </p>
+            </article>
+            <article className="info-card">
+              <h3>Advertising only</h3>
+              <p>
+                Already planned the night? We can focus on event pages, RSVP capture, reminders,
+                and attendance visibility.
+              </p>
+            </article>
+          </div>
+        </section>
       </div>
     </div>
   )
