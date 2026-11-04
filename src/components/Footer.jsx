@@ -9,8 +9,8 @@ export default function Footer() {
           <div>
             <img className="footer__logo" src={logoLight} alt="Endless Clicks" />
             <p>
-              Endless Clicks Pty Ltd hosts, plans, and advertises professional events
-              from Gaborone, Botswana — helping people gather with clarity and style.
+              Endless Clicks Pty Ltd advertises upcoming events in Gaborone, Botswana —
+              so guests can discover what’s next and confirm they are coming.
             </p>
           </div>
           <div>
@@ -23,7 +23,6 @@ export default function Footer() {
             <h4>Contact</h4>
             <p>Gaborone, Botswana</p>
             <a href="mailto:info@endlessclicks.co.bw">info@endlessclicks.co.bw</a>
-            <p>Mon–Fri · 09:00–17:00</p>
           </div>
         </div>
         <div className="footer__bottom">

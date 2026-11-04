@@ -179,11 +179,22 @@ main {
 
 .btn--primary {
   background: var(--black);
-  color: var(--white);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
 }
 
 .btn--primary:hover {
   background: var(--blue-deep);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.nav__links .btn--primary {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .btn--secondary {

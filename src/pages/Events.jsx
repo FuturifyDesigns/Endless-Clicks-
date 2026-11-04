@@ -35,10 +35,10 @@ export default function Events() {
     <div ref={root} className="page">
       <header className="page-hero">
         <p className="eyebrow">Events</p>
-        <h1>Gatherings worth your evening</h1>
+        <h1>Endless Clicks events</h1>
         <p className="lead">
-          Explore upcoming and live programmes from Endless Clicks in Gaborone. Each page
-          shares the details that matter — then invites you to confirm you are coming.
+          Browse upcoming and live events posted by Endless Clicks in Gaborone. Open a
+          listing for details, follow the countdown, and register that you are coming.
         </p>
       </header>
 
@@ -46,28 +46,28 @@ export default function Events() {
         <div className="section" style={{ paddingTop: '1.6rem', paddingBottom: '1.6rem' }}>
           <div className="services-grid">
             <InteractiveCard
-              eyebrow="Experience"
-              title="Before doors"
-              summary="Countdowns, venue details, and clear expectations so guests arrive prepared."
-              detail="Every listing highlights when and where to show up, plus what the evening is about."
+              eyebrow="Guest tip"
+              title="Before the night"
+              summary="Read the date, venue, and description so you know exactly what to expect."
+              detail="Every Endless Clicks listing is written to help you decide and prepare with confidence."
               image={venue}
-              imageAlt="Event venue prepared for guests"
+              imageAlt="Event venue seating"
             />
             <InteractiveCard
-              eyebrow="Experience"
-              title="Arrival"
-              summary="Smooth check-in and a warm first impression as people step in."
-              detail="Registration details help our team welcome the right guests without the chaos."
+              eyebrow="Guest tip"
+              title="Register your spot"
+              summary="Confirm attendance with your name and contact details."
+              detail="Live counts update as guests register, so you can see interest building."
               image={checkin}
-              imageAlt="Event check-in desk"
+              imageAlt="Event check-in"
             />
             <InteractiveCard
-              eyebrow="Experience"
-              title="In the room"
-              summary="Live energy, attentive hosting, and moments that feel considered."
-              detail="When an event is underway, status updates to live so everyone knows the programme has begun."
+              eyebrow="Guest tip"
+              title="When it is live"
+              summary="Live events are marked clearly while the programme is underway."
+              detail="After an event ends, the next Endless Clicks listing moves forward on the board."
               image={heroLive}
-              imageAlt="Audience at a live event"
+              imageAlt="Live event audience"
             />
           </div>
         </div>
@@ -93,13 +93,13 @@ export default function Events() {
         <h2 className="section-title">Upcoming</h2>
         {upcoming.length === 0 && !loading ? (
           <div className="empty-state reveal-card">
-            <h3>New dates coming soon</h3>
+            <h3>New Endless Clicks dates soon</h3>
             <p className="muted">
-              Fresh Endless Clicks experiences are being prepared for Gaborone. If you want
-              a private or branded event hosted, planned, or promoted, we would love to talk.
+              Fresh listings will appear here when they are ready. For questions about a
+              coming event, contact the team in Gaborone.
             </p>
             <Link className="btn btn--primary" to="/contact">
-              Enquire about an event
+              Contact us
             </Link>
           </div>
         ) : (

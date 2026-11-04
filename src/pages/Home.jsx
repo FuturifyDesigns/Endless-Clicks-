@@ -43,42 +43,42 @@ export default function Home() {
           <div className="hero__copy">
             <img className="hero__brand" src={logoLight} alt="Endless Clicks" />
             <p className="eyebrow hero__kicker">Gaborone, Botswana</p>
-            <h1>Events people remember — planned with care, hosted with polish.</h1>
+            <h1>Discover Endless Clicks events — and confirm you are going.</h1>
             <p className="lead">
-              Endless Clicks Pty Ltd hosts, plans, and advertises professional gatherings
-              across Botswana. From intimate consultations to full venue productions, we
-              help you fill the room and run the day with confidence.
+              This is the official board for upcoming Endless Clicks events. Browse what’s
+              next in Gaborone, follow the countdown, and register with your details so we
+              know you are coming.
             </p>
             <div className="hero__actions">
               <Link
                 className="btn btn--primary"
-                to={featured ? `/events/${featured.slug}` : '/contact'}
+                to={featured ? `/events/${featured.slug}` : '/events'}
               >
-                {featured ? 'Register for this event' : 'Start a conversation'}
+                {featured ? 'Register for this event' : 'Browse events'}
               </Link>
-              <Link className="btn btn--ghost" to="/events">
-                Browse events
+              <Link className="btn btn--ghost" to="/about">
+                About Endless Clicks
               </Link>
             </div>
             <div className="hero__meta">
               <div>
-                <strong>Host</strong>
-                <span>On-site delivery</span>
+                <strong>Upcoming</strong>
+                <span>See what’s next</span>
               </div>
               <div>
-                <strong>Plan</strong>
-                <span>End-to-end prep</span>
+                <strong>Live</strong>
+                <span>Know what’s on now</span>
               </div>
               <div>
-                <strong>Advertise</strong>
-                <span>Drive attendance</span>
+                <strong>Register</strong>
+                <span>Say you are coming</span>
               </div>
             </div>
           </div>
 
           <div className="hero__stage">
-            <div className="hero__visual reveal-card">
-              <img src={heroLive} alt="Guests enjoying a live Endless Clicks event" />
+            <div className="hero__visual">
+              <img src={heroLive} alt="Guests at an Endless Clicks event" />
             </div>
             {loading && (
               <div className="featured-panel">
@@ -117,13 +117,13 @@ export default function Home() {
             {!loading && !featured && (
               <div className="featured-panel">
                 <p className="eyebrow">Coming up</p>
-                <h2>Fresh dates are on the way</h2>
+                <h2>New Endless Clicks dates soon</h2>
                 <p>
-                  Follow Endless Clicks for the next Gaborone gathering — or tell us about
-                  an event you want hosted, planned, or promoted.
+                  Fresh events will appear here with countdown, venue details, and registration.
+                  Follow along or reach out if you have a question about an upcoming night.
                 </p>
                 <Link className="btn btn--primary" to="/contact">
-                  Talk to our team
+                  Contact us
                 </Link>
               </div>
             )}
@@ -134,37 +134,37 @@ export default function Home() {
       <section className="band-soft">
         <div className="section">
           <div className="section__head reveal-card">
-            <p className="eyebrow">What we deliver</p>
-            <h2>Hosting, planning, and advertising — under one roof.</h2>
+            <p className="eyebrow">What you will find here</p>
+            <h2>Everything you need before you show up.</h2>
             <p>
-              Hover each card for more detail. Every engagement is tailored to your audience,
-              venue, and goals in Gaborone and beyond.
+              Endless Clicks posts its events on this site so guests can explore details,
+              watch the countdown, and register attendance in one place.
             </p>
           </div>
           <div className="services-grid">
             <InteractiveCard
-              eyebrow="Service 01"
-              title="Event hosting"
-              summary="Calm, professional presence on the day — guest flow, stage timing, and partner support."
-              detail="Our hosts keep arrivals smooth, cues on time, and stakeholders aligned so you can focus on your guests."
+              eyebrow="01"
+              title="Event details"
+              summary="Date, venue, and what the night is about — clearly laid out."
+              detail="Each listing helps you decide quickly whether the event is for you and how to prepare."
+              image={venue}
+              imageAlt="Prepared event venue"
+            />
+            <InteractiveCard
+              eyebrow="02"
+              title="Live status"
+              summary="Countdowns for upcoming events, and a live marker when the programme starts."
+              detail="When one event ends, the next Endless Clicks event moves into focus automatically."
               image={hosting}
-              imageAlt="Event team coordinating a venue setup"
+              imageAlt="Event space being prepared"
             />
             <InteractiveCard
-              eyebrow="Service 02"
-              title="Event planning"
-              summary="From concept and floor plans to suppliers and run-of-show documents."
-              detail="We map the full timeline, budgets, and contingencies so nothing important is left to chance."
-              image={planning}
-              imageAlt="Planners reviewing event floor plans"
-            />
-            <InteractiveCard
-              eyebrow="Service 03"
-              title="Event advertising"
-              summary="Clear messaging and registration that turn interest into confirmed attendance."
-              detail="We help you promote the date, capture guest details, and keep reminders consistent until doors open."
+              eyebrow="03"
+              title="Easy registration"
+              summary="Confirm you are coming with your name and contact details."
+              detail="Live attendance counts update as guests register, so you can see the room filling up."
               image={checkin}
-              imageAlt="Guests checking in at an Endless Clicks event"
+              imageAlt="Guests checking in at an event"
             />
           </div>
         </div>
@@ -173,23 +173,22 @@ export default function Home() {
       <section className="section">
         <div className="split split--wide">
           <div className="media-frame reveal-card">
-            <img src={venue} alt="Prepared event hall with stage and seating" />
+            <img src={planning} alt="Endless Clicks event planning materials" />
           </div>
           <div className="reveal-card">
-            <p className="eyebrow">How guests take part</p>
-            <h2>Register once. Feel the room fill.</h2>
+            <p className="eyebrow">How it works</p>
+            <h2>Browse. Register. Arrive ready.</h2>
             <p>
-              Each event page shares the essentials — time, place, and what to expect — then
-              invites guests to confirm attendance with their details. Live counts help everyone
-              see momentum building.
+              Open an event page, read the essentials, then confirm your attendance. That’s it —
+              no complicated steps, just clear information from Endless Clicks.
             </p>
             <ul className="list-check">
-              <li>Countdown to doors, then a clear “Event is live” status</li>
-              <li>Simple registration with name and contact information</li>
-              <li>Attendance numbers that update as people confirm</li>
+              <li>See upcoming and live Endless Clicks events</li>
+              <li>Register with your details so we expect you</li>
+              <li>Watch live “going” counts as guests confirm</li>
             </ul>
             <Link className="btn btn--ghost" to="/events" style={{ marginTop: '0.5rem' }}>
-              See open events
+              Go to events
             </Link>
           </div>
         </div>
@@ -199,31 +198,26 @@ export default function Home() {
         <div className="section">
           <div className="split split--wide">
             <div className="reveal-card">
-              <p className="eyebrow">Why Endless Clicks</p>
-              <h2>Built for turnout, timing, and trust.</h2>
+              <p className="eyebrow">Endless Clicks</p>
+              <h2>Events posted by us, for people who want to be there.</h2>
               <p>
-                Great events fail when details are vague or promotion starts late. We treat
-                attendance as a measurable outcome — with clear pages, disciplined planning,
-                and hosting that feels intentional from arrival to wrap.
+                This website is the public home for Endless Clicks event listings in Gaborone.
+                Discover what’s coming, mark yourself as going, and stay close to the nights
+                that matter.
               </p>
-              <ul className="list-check">
-                <li>Gaborone-based team with Southern African reach</li>
-                <li>Practical timelines your stakeholders can follow</li>
-                <li>Guest communication that respects people’s time</li>
-              </ul>
             </div>
             <div className="stat-row reveal-card">
               <div className="stat-box">
-                <strong>3</strong>
-                <span>Service pillars</span>
+                <strong>BW</strong>
+                <span>Based in Gaborone</span>
               </div>
               <div className="stat-box">
                 <strong>Live</strong>
-                <span>Attendance pulse</span>
+                <span>Status updates</span>
               </div>
               <div className="stat-box">
-                <strong>BW</strong>
-                <span>Based in Gaborone</span>
+                <strong>RSVP</strong>
+                <span>Confirm attendance</span>
               </div>
             </div>
           </div>
@@ -234,7 +228,7 @@ export default function Home() {
         <div className="section__head reveal-card">
           <p className="eyebrow">Lineup</p>
           <h2>Upcoming & live events</h2>
-          <p>Confirm your spot on any open date — or ask us to create the next one with you.</p>
+          <p>Register for any open Endless Clicks date and we will look forward to seeing you.</p>
         </div>
         {events.length > 0 ? (
           <>
@@ -255,41 +249,14 @@ export default function Home() {
           <div className="empty-state reveal-card">
             <h3>New dates coming soon</h3>
             <p className="muted">
-              We are preparing the next Endless Clicks experiences in Gaborone. Reach out if
-              you would like us to host, plan, or advertise an event for your organisation.
+              Endless Clicks is preparing the next listings. Check back shortly, or contact
+              us if you have a question about an upcoming event.
             </p>
             <Link className="btn btn--primary" to="/contact">
-              Contact the team
+              Contact us
             </Link>
           </div>
         )}
-      </section>
-
-      <section className="band-soft">
-        <div className="section">
-          <div className="section__head reveal-card">
-            <p className="eyebrow">Working process</p>
-            <h2>From brief to packed room</h2>
-          </div>
-          <div className="process-steps">
-            <article className="process-step reveal-card">
-              <h3>Discovery</h3>
-              <p>Goals, audience, date options, and what success should look like.</p>
-            </article>
-            <article className="process-step reveal-card">
-              <h3>Planning</h3>
-              <p>Venue flow, programme structure, suppliers, and communication timeline.</p>
-            </article>
-            <article className="process-step reveal-card">
-              <h3>Promotion</h3>
-              <p>Event pages, registration, and reminders that keep the date top of mind.</p>
-            </article>
-            <article className="process-step reveal-card">
-              <h3>Delivery</h3>
-              <p>On-site hosting, live attendance awareness, and a clean handoff at wrap.</p>
-            </article>
-          </div>
-        </div>
       </section>
 
       <section className="section">
@@ -299,37 +266,37 @@ export default function Home() {
             <h2>Common questions</h2>
             <div className="faq">
               <details>
-                <summary>Do guests need to buy tickets to register?</summary>
+                <summary>What is this website for?</summary>
                 <p>
-                  Not necessarily. Many Endless Clicks events use RSVP-style registration so
-                  we know who is coming and can prepare properly.
+                  It advertises Endless Clicks events and lets guests register that they are
+                  attending.
                 </p>
               </details>
               <details>
-                <summary>Where are you based?</summary>
+                <summary>Do I need a ticket to register?</summary>
                 <p>
-                  We are based in Gaborone, Botswana, and support events locally as well as
-                  selected regional productions.
+                  Many listings use simple RSVP registration so we know who is coming. Each
+                  event page will note anything extra you need to know.
                 </p>
               </details>
               <details>
-                <summary>How do I start planning with you?</summary>
+                <summary>Where are the events held?</summary>
                 <p>
-                  Send a note via Contact with your date window, audience size, and goals.
-                  We will respond with availability and a practical next step.
+                  Endless Clicks is based in Gaborone, Botswana. Venue details appear on each
+                  event page.
                 </p>
               </details>
             </div>
           </div>
           <div className="info-card reveal-card">
-            <p className="eyebrow">Next step</p>
-            <h2>Ready to plan your event?</h2>
+            <p className="eyebrow">Stay in touch</p>
+            <h2>Questions about an event?</h2>
             <p>
-              Tell us the date, venue status, and outcome you need. We will come back with
-              a clear planning outline.
+              Email the team and we will help with details, accessibility notes, or anything
+              else you need before the night.
             </p>
             <Link className="btn btn--primary" to="/contact">
-              Get in touch
+              Contact Endless Clicks
             </Link>
           </div>
         </div>

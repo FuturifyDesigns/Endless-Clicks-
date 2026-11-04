@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { enterStagger } from '../lib/motion'
@@ -31,19 +32,19 @@ export default function Contact() {
       <div className="contact-wrap">
         <header>
           <p className="eyebrow">Contact</p>
-          <h1>Let’s plan the next event properly.</h1>
+          <h1>Questions about an Endless Clicks event?</h1>
           <p className="lead">
-            Bookings, partnerships, and questions about hosting, planning, or advertising —
-            we would love to hear from you in Gaborone, Botswana.
+            Reach the team in Gaborone for listing details, registration help, or general
+            enquiries about upcoming Endless Clicks events.
           </p>
         </header>
 
         <div className="contact-grid">
           <div className="info-card reveal-card">
             <div className="media-frame media-frame--sm">
-              <img src={consult} alt="Consultation meeting with Endless Clicks" />
+              <img src={consult} alt="Speaking with the Endless Clicks team" />
             </div>
-            <h2>Studio details</h2>
+            <h2>Contact details</h2>
             <div className="content-block">
               <p>
                 <strong>Email</strong>
@@ -56,25 +57,18 @@ export default function Contact() {
                 Gaborone, Botswana
               </p>
               <p>
-                <strong>Response time</strong>
-                <br />
-                We aim to reply within 1–2 business days with availability and next steps.
-              </p>
-              <p>
-                <strong>Helpful details to include</strong>
+                <strong>Helpful to include</strong>
               </p>
               <ul className="list-check">
-                <li>Preferred date or date range</li>
-                <li>Venue status (secured / still exploring)</li>
-                <li>Expected audience size</li>
-                <li>Event type and the outcome you want</li>
-                <li>Whether you need hosting, planning, advertising, or all three</li>
+                <li>Which event you are asking about</li>
+                <li>Your name and preferred contact number</li>
+                <li>Any accessibility or arrival questions</li>
               </ul>
             </div>
           </div>
 
           <form className="register-form info-card reveal-card" onSubmit={handleSubmit}>
-            <h2>Send an enquiry</h2>
+            <h2>Send a message</h2>
             <div className="register-form__grid">
               <label>
                 Full name
@@ -82,34 +76,33 @@ export default function Contact() {
               </label>
               <label>
                 Email
-                <input required type="email" name="email" placeholder="you@organisation.com" />
-              </label>
-              <label>
-                Organisation
-                <input name="organisation" placeholder="Company or community" />
+                <input required type="email" name="email" placeholder="you@email.com" />
               </label>
               <label>
                 Phone
                 <input name="phone" placeholder="+267 ..." />
               </label>
+              <label>
+                Event (optional)
+                <input name="event" placeholder="Event name if known" />
+              </label>
               <label className="register-form__full">
-                Project details
+                Message
                 <textarea
                   required
                   rows="6"
                   name="message"
-                  placeholder="Date, venue, audience size, services needed..."
+                  placeholder="How can we help?"
                 />
               </label>
             </div>
             {sent ? (
               <p className="form-alert form-alert--ok">
-                Thank you. Please also email info@endlessclicks.co.bw so our team can confirm
-                receipt and follow up.
+                Thank you. Please also email info@endlessclicks.co.bw so we can confirm and reply.
               </p>
             ) : (
               <button className="btn btn--primary" type="submit">
-                Submit enquiry
+                Submit message
               </button>
             )}
           </form>
@@ -118,34 +111,18 @@ export default function Contact() {
         <section className="section" style={{ paddingBottom: 0 }}>
           <div className="split split--wide">
             <div className="media-frame reveal-card">
-              <img src={checkin} alt="Guests arriving and checking in" />
+              <img src={checkin} alt="Guests arriving at an Endless Clicks event" />
             </div>
             <div className="reveal-card">
-              <p className="eyebrow">Engagement paths</p>
-              <h2>How clients usually start</h2>
-              <div className="services-grid" style={{ gridTemplateColumns: '1fr' }}>
-                <article className="info-card">
-                  <h3>Single-event support</h3>
-                  <p>
-                    Ideal when you already have a date and need hosting, planning structure,
-                    or promotion for one programme.
-                  </p>
-                </article>
-                <article className="info-card">
-                  <h3>Season / series</h3>
-                  <p>
-                    For organisations running multiple events — we help standardise guest
-                    communication and delivery quality.
-                  </p>
-                </article>
-                <article className="info-card">
-                  <h3>Advertising focus</h3>
-                  <p>
-                    Already planned the night? We can concentrate on event pages, RSVPs, and
-                    reminders that improve turnout.
-                  </p>
-                </article>
-              </div>
+              <p className="eyebrow">Before you write</p>
+              <h2>Looking for an event instead?</h2>
+              <p>
+                Browse the Events page to see upcoming and live Endless Clicks listings, then
+                register directly on the event page.
+              </p>
+              <Link className="btn btn--ghost" to="/events">
+                Browse events
+              </Link>
             </div>
           </div>
         </section>

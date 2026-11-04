@@ -10,6 +10,7 @@ import planning from '../assets/photos/planning.jpg'
 import hosting from '../assets/photos/hosting.jpg'
 import checkin from '../assets/photos/checkin.jpg'
 import consult from '../assets/photos/consult.jpg'
+import heroLive from '../assets/photos/hero-live.jpg'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -17,38 +18,38 @@ const treeNodes = [
   {
     id: 'root',
     label: 'Endless Clicks',
-    title: 'Our roots in Gaborone',
-    body: 'Endless Clicks Pty Ltd grew from a simple belief: events should feel organised, welcoming, and worth showing up for. From Gaborone, Botswana, we help brands, organisations, and communities gather with intention.',
+    title: 'Who we are',
+    body: 'Endless Clicks Pty Ltd is based in Gaborone, Botswana. We create and share events that bring people together — and this website is where those events are advertised.',
   },
   {
-    id: 'host',
-    label: 'Branch · Host',
-    title: 'Hosting that keeps the day calm',
-    body: 'On the ground we manage arrivals, programme cues, partner logistics, and the small interventions that prevent big disruptions — so organisers can stay present with their guests.',
+    id: 'board',
+    label: 'Branch · Listings',
+    title: 'A clear event board',
+    body: 'Upcoming Endless Clicks events appear here with date, venue, and context so guests can decide quickly and feel informed.',
   },
   {
-    id: 'plan',
-    label: 'Branch · Plan',
-    title: 'Planning that turns ideas into schedules',
-    body: 'Floor plans, supplier coordination, budgets, and run-of-show documents. We translate ambition into a timeline people can actually follow.',
+    id: 'countdown',
+    label: 'Branch · Timing',
+    title: 'Countdown to live',
+    body: 'Each upcoming event shows a countdown. When it starts, status switches to live. When it ends, the next Endless Clicks listing takes focus.',
   },
   {
-    id: 'advertise',
-    label: 'Branch · Advertise',
-    title: 'Advertising that earns attendance',
-    body: 'Clear event pages, registration, and reminders. We promote the gathering in a way that converts curiosity into confirmed guests.',
+    id: 'rsvp',
+    label: 'Branch · RSVP',
+    title: 'Confirm you are coming',
+    body: 'Guests register with their name and key details. Live attendance counts help everyone see the energy building before doors open.',
   },
   {
-    id: 'people',
-    label: 'Canopy · People',
-    title: 'Who we serve',
-    body: 'Corporates, brands, community organisers, venues, and promoters who need reliable turnout and a professional guest experience in Botswana and the region.',
+    id: 'place',
+    label: 'Canopy · Place',
+    title: 'Rooted in Gaborone',
+    body: 'Our events are planned with Botswana audiences in mind — local venues, local timing, and a guest experience that feels welcoming.',
   },
   {
     id: 'promise',
     label: 'Canopy · Promise',
-    title: 'Clarity over hype',
-    body: 'We favour honest capacity planning, precise communication, and hosting that respects people’s time — from the first briefing to the final thank-you.',
+    title: 'Clarity first',
+    body: 'No guesswork. We aim for honest details, practical information, and registration that respects your time.',
   },
 ]
 
@@ -79,46 +80,46 @@ export default function About() {
             ease: 'none',
             scrollTrigger: {
               trigger: treeRef.current,
-              start: 'top 75%',
-              end: 'bottom 55%',
-              scrub: true,
+              start: 'top 70%',
+              end: 'bottom 60%',
+              scrub: 0.6,
             },
           },
         )
       }
 
-      nodes.forEach((node, index) => {
-        gsap.fromTo(
-          node,
-          { autoAlpha: 0, x: index % 2 === 0 ? -40 : 40 },
-          {
+      gsap.set(nodes, { autoAlpha: 0, y: 24 })
+      ScrollTrigger.batch(nodes, {
+        start: 'top 88%',
+        onEnter: (batch) =>
+          gsap.to(batch, {
             autoAlpha: 1,
-            x: 0,
-            duration: 0.75,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.08,
             ease: 'power2.out',
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: node,
-              start: 'top 85%',
-              end: 'top 40%',
-              toggleActions: 'play reverse play reverse',
-            },
-          },
-        )
+            overwrite: 'auto',
+          }),
+        onLeaveBack: (batch) =>
+          gsap.to(batch, {
+            autoAlpha: 0,
+            y: 16,
+            duration: 0.3,
+            overwrite: 'auto',
+          }),
       })
     },
-    { scope: root, revertOnUpdate: true },
+    { scope: root },
   )
 
   return (
     <div ref={root} className="page">
       <header className="about-hero">
         <p className="eyebrow">About Endless Clicks</p>
-        <h1>We turn event ideas into attended experiences.</h1>
+        <h1>We post events. You choose which ones to attend.</h1>
         <p className="lead">
-          Based in Gaborone, Botswana, Endless Clicks Pty Ltd is a professional event
-          company focused on hosting, planning, and advertising gatherings that feel
-          intentional from first brief to final applause.
+          Endless Clicks Pty Ltd advertises its upcoming events on this site so people in
+          Gaborone — and beyond — can discover what’s next and register their attendance.
         </p>
         <img className="about-hero__logo" src={logoLight} alt="Endless Clicks logo" />
       </header>
@@ -126,18 +127,19 @@ export default function About() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="split split--wide">
           <div className="media-frame reveal-card">
-            <img src={consult} alt="Endless Clicks team consulting with clients" />
+            <img src={heroLive} alt="Audience at an Endless Clicks event" />
           </div>
           <div className="reveal-card">
-            <p className="eyebrow">Our purpose</p>
-            <h2>Events should feel organised, welcoming, and worth the trip.</h2>
+            <p className="eyebrow">Our focus</p>
+            <h2>An event advertising home for Endless Clicks.</h2>
             <p>
-              We start with who should attend and why they should care, then build the plan,
-              messaging, and on-the-day hosting required to deliver that outcome.
+              This website is not a marketplace for every organiser. It is the public board
+              for events created and shared by Endless Clicks — with registration so we know
+              who plans to be there.
             </p>
             <p>
-              Whether you need a polished corporate session, a public showcase, or a
-              community gathering, we bring practical structure and a warm guest experience.
+              Browse listings, follow countdowns, and confirm your spot. Simple, clear, and
+              built around the guest experience.
             </p>
           </div>
         </div>
@@ -147,10 +149,7 @@ export default function About() {
         <div className="section__head reveal-card">
           <p className="eyebrow">Scroll the story</p>
           <h2>The Endless Clicks tree</h2>
-          <p>
-            Scroll down to grow each branch of who we are. Scroll up and the story folds
-            back — a living map of our work.
-          </p>
+          <p>Move down the page to reveal each part of how this event board works.</p>
         </div>
 
         <div className="tree" ref={treeRef}>
@@ -175,21 +174,21 @@ export default function About() {
       <section className="band-soft">
         <div className="section">
           <div className="section__head reveal-card">
-            <p className="eyebrow">In the room</p>
-            <h2>How our work looks on the ground</h2>
+            <p className="eyebrow">Moments from our events</p>
+            <h2>What Endless Clicks nights look like</h2>
           </div>
           <div className="photo-mosaic">
             <figure className="reveal-card">
-              <img src={planning} alt="Detailed event planning session" />
-              <figcaption>Planning sessions with clear floor plans and timelines</figcaption>
+              <img src={planning} alt="Planning an Endless Clicks event" />
+              <figcaption>Thoughtful preparation behind every listing</figcaption>
             </figure>
             <figure className="reveal-card">
-              <img src={hosting} alt="Venue preparation before doors open" />
-              <figcaption>Hands-on hosting before guests arrive</figcaption>
+              <img src={hosting} alt="Venue ready for guests" />
+              <figcaption>Spaces prepared for guests to arrive</figcaption>
             </figure>
             <figure className="reveal-card">
-              <img src={checkin} alt="Guest check-in at an event entrance" />
-              <figcaption>Warm, efficient arrivals and registration</figcaption>
+              <img src={checkin} alt="Guest registration at the door" />
+              <figcaption>Registration that makes arrivals smoother</figcaption>
             </figure>
           </div>
         </div>
@@ -197,20 +196,15 @@ export default function About() {
 
       <section className="section">
         <div className="split">
-          <div className="info-card reveal-card">
-            <p className="eyebrow">Values</p>
-            <h2>Clarity over hype</h2>
-            <p>
-              Precise schedules, honest capacity planning, and communication that respects
-              people’s time. A good event feels intentional from the first email to the last goodbye.
-            </p>
+          <div className="media-frame reveal-card">
+            <img src={consult} alt="Endless Clicks team in conversation" />
           </div>
           <div className="info-card reveal-card">
-            <p className="eyebrow">Work with us</p>
-            <h2>Tell us what you are planning</h2>
+            <p className="eyebrow">Get in touch</p>
+            <h2>Questions about a listing?</h2>
             <p>
-              Share your date window, audience, and goal. We are based in Gaborone and ready
-              to help you host, plan, or advertise the next gathering.
+              Reach us in Gaborone at info@endlessclicks.co.bw — we are happy to help with
+              event details or registration queries.
             </p>
             <Link className="btn btn--primary" to="/contact">
               Contact Endless Clicks
