@@ -2,6 +2,9 @@ import { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { enterStagger } from '../lib/motion'
+import { useScrollReveal } from '../hooks/useScrollReveal'
+import consult from '../assets/photos/consult.jpg'
+import checkin from '../assets/photos/checkin.jpg'
 
 gsap.registerPlugin(useGSAP)
 
@@ -11,10 +14,12 @@ export default function Contact() {
 
   useGSAP(
     () => {
-      gsap.from('.contact-wrap > *', { ...enterStagger })
+      gsap.from('.contact-wrap > header > *', { ...enterStagger })
     },
     { scope: root },
   )
+
+  useScrollReveal(root, '.reveal-card')
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -28,24 +33,27 @@ export default function Contact() {
           <p className="eyebrow">Contact</p>
           <h1>Let’s plan the next event properly.</h1>
           <p className="lead">
-            Use this page for bookings, partnerships, sponsorship enquiries, or questions
-            about hosting, planning, and advertising support from Endless Clicks Pty Ltd.
+            Bookings, partnerships, and questions about hosting, planning, or advertising —
+            we would love to hear from you in Gaborone, Botswana.
           </p>
         </header>
 
         <div className="contact-grid">
-          <div className="info-card">
+          <div className="info-card reveal-card">
+            <div className="media-frame media-frame--sm">
+              <img src={consult} alt="Consultation meeting with Endless Clicks" />
+            </div>
             <h2>Studio details</h2>
             <div className="content-block">
               <p>
                 <strong>Email</strong>
                 <br />
-                <a href="mailto:hello@endlessclicks.co.za">hello@endlessclicks.co.za</a>
+                <a href="mailto:info@endlessclicks.co.bw">info@endlessclicks.co.bw</a>
               </p>
               <p>
-                <strong>Service areas</strong>
+                <strong>Location</strong>
                 <br />
-                Gaborone · Johannesburg · Cape Town · regional pop-ups across Southern Africa
+                Gaborone, Botswana
               </p>
               <p>
                 <strong>Response time</strong>
@@ -53,19 +61,19 @@ export default function Contact() {
                 We aim to reply within 1–2 business days with availability and next steps.
               </p>
               <p>
-                <strong>Best information to include</strong>
+                <strong>Helpful details to include</strong>
               </p>
               <ul className="list-check">
                 <li>Preferred date or date range</li>
-                <li>City / venue status</li>
+                <li>Venue status (secured / still exploring)</li>
                 <li>Expected audience size</li>
-                <li>Event type and outcome you want</li>
+                <li>Event type and the outcome you want</li>
                 <li>Whether you need hosting, planning, advertising, or all three</li>
               </ul>
             </div>
           </div>
 
-          <form className="register-form info-card" onSubmit={handleSubmit}>
+          <form className="register-form info-card reveal-card" onSubmit={handleSubmit}>
             <h2>Send an enquiry</h2>
             <div className="register-form__grid">
               <label>
@@ -82,7 +90,7 @@ export default function Contact() {
               </label>
               <label>
                 Phone
-                <input name="phone" placeholder="+267 / +27 ..." />
+                <input name="phone" placeholder="+267 ..." />
               </label>
               <label className="register-form__full">
                 Project details
@@ -90,14 +98,14 @@ export default function Contact() {
                   required
                   rows="6"
                   name="message"
-                  placeholder="Date, city, audience size, services needed, and any must-have details..."
+                  placeholder="Date, venue, audience size, services needed..."
                 />
               </label>
             </div>
             {sent ? (
               <p className="form-alert form-alert--ok">
-                Thanks — your enquiry is ready to send. Please also email
-                hello@endlessclicks.co.za so the team can confirm receipt.
+                Thank you. Please also email info@endlessclicks.co.bw so our team can confirm
+                receipt and follow up.
               </p>
             ) : (
               <button className="btn btn--primary" type="submit">
@@ -108,32 +116,37 @@ export default function Contact() {
         </div>
 
         <section className="section" style={{ paddingBottom: 0 }}>
-          <div className="section__head">
-            <p className="eyebrow">Engagement paths</p>
-            <h2>How clients usually start</h2>
-          </div>
-          <div className="services-grid">
-            <article className="info-card">
-              <h3>Single-event support</h3>
-              <p>
-                Ideal when you already have a date and need professional hosting, planning
-                structure, or promotion support for one programme.
-              </p>
-            </article>
-            <article className="info-card">
-              <h3>Season / series</h3>
-              <p>
-                For organisations running multiple events across a quarter. We help standardise
-                registration, messaging, and delivery quality.
-              </p>
-            </article>
-            <article className="info-card">
-              <h3>Advertising only</h3>
-              <p>
-                Already planned the night? We can focus on event pages, RSVP capture, reminders,
-                and attendance visibility.
-              </p>
-            </article>
+          <div className="split split--wide">
+            <div className="media-frame reveal-card">
+              <img src={checkin} alt="Guests arriving and checking in" />
+            </div>
+            <div className="reveal-card">
+              <p className="eyebrow">Engagement paths</p>
+              <h2>How clients usually start</h2>
+              <div className="services-grid" style={{ gridTemplateColumns: '1fr' }}>
+                <article className="info-card">
+                  <h3>Single-event support</h3>
+                  <p>
+                    Ideal when you already have a date and need hosting, planning structure,
+                    or promotion for one programme.
+                  </p>
+                </article>
+                <article className="info-card">
+                  <h3>Season / series</h3>
+                  <p>
+                    For organisations running multiple events — we help standardise guest
+                    communication and delivery quality.
+                  </p>
+                </article>
+                <article className="info-card">
+                  <h3>Advertising focus</h3>
+                  <p>
+                    Already planned the night? We can concentrate on event pages, RSVPs, and
+                    reminders that improve turnout.
+                  </p>
+                </article>
+              </div>
+            </div>
           </div>
         </section>
       </div>

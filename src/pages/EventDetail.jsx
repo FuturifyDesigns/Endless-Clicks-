@@ -96,8 +96,8 @@ export default function EventDetail() {
         <div className="detail-panel detail-panel--form">
           <h2>Confirm your attendance</h2>
           <p className="muted">
-            Register with your name and contact details. Your response is added to the guest
-            list and the public attendance count updates.
+            Share your name and contact details to let us know you are coming. The live
+            attendance count updates as guests confirm.
           </p>
           <RegisterForm eventId={event.id} disabled={closed} onSuccess={refreshStat} />
         </div>

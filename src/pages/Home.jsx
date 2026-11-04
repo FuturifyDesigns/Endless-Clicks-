@@ -6,10 +6,17 @@ import Countdown from '../components/Countdown'
 import EventCard from '../components/EventCard'
 import AttendanceMeter from '../components/AttendanceMeter'
 import LiveBadge from '../components/LiveBadge'
+import InteractiveCard from '../components/InteractiveCard'
 import { useEvents } from '../hooks/useEvents'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import { formatEventDate, getEventStatus } from '../lib/events'
 import { enter, enterStagger } from '../lib/motion'
 import logoLight from '../assets/logo-light.jpg'
+import heroLive from '../assets/photos/hero-live.jpg'
+import hosting from '../assets/photos/hosting.jpg'
+import venue from '../assets/photos/venue.jpg'
+import checkin from '../assets/photos/checkin.jpg'
+import planning from '../assets/photos/planning.jpg'
 
 gsap.registerPlugin(useGSAP)
 
@@ -22,10 +29,12 @@ export default function Home() {
   useGSAP(
     () => {
       gsap.from('.hero__copy > *', { ...enterStagger })
-      gsap.from('.featured-panel', { ...enter, delay: 0.08 })
+      gsap.from('.hero__visual, .featured-panel', { ...enter, delay: 0.1 })
     },
     { scope: root, dependencies: [loading, featured?.id] },
   )
+
+  useScrollReveal(root, '.reveal-card', [events.length, loading])
 
   return (
     <div ref={root}>
@@ -33,19 +42,19 @@ export default function Home() {
         <div className="hero__grid">
           <div className="hero__copy">
             <img className="hero__brand" src={logoLight} alt="Endless Clicks" />
-            <p className="eyebrow hero__kicker">Event hosting · Planning · Advertising</p>
-            <h1>Professional events that people actually show up for.</h1>
+            <p className="eyebrow hero__kicker">Gaborone, Botswana</p>
+            <h1>Events people remember — planned with care, hosted with polish.</h1>
             <p className="lead">
-              Endless Clicks Pty Ltd helps brands, organisations, and communities host,
-              plan, and advertise events with clear timelines, strong guest communication,
-              and live registration tracking — from first announcement to closing remarks.
+              Endless Clicks Pty Ltd hosts, plans, and advertises professional gatherings
+              across Botswana. From intimate consultations to full venue productions, we
+              help you fill the room and run the day with confidence.
             </p>
             <div className="hero__actions">
               <Link
                 className="btn btn--primary"
                 to={featured ? `/events/${featured.slug}` : '/contact'}
               >
-                {featured ? 'Register for featured event' : 'Book a planning call'}
+                {featured ? 'Register for this event' : 'Start a conversation'}
               </Link>
               <Link className="btn btn--ghost" to="/events">
                 Browse events
@@ -53,22 +62,29 @@ export default function Home() {
             </div>
             <div className="hero__meta">
               <div>
-                <strong>01</strong>
-                <span>Host on the day</span>
+                <strong>Host</strong>
+                <span>On-site delivery</span>
               </div>
               <div>
-                <strong>02</strong>
-                <span>Plan every detail</span>
+                <strong>Plan</strong>
+                <span>End-to-end prep</span>
               </div>
               <div>
-                <strong>03</strong>
-                <span>Advertise for turnout</span>
+                <strong>Advertise</strong>
+                <span>Drive attendance</span>
               </div>
             </div>
           </div>
 
           <div className="hero__stage">
-            {loading && <div className="featured-panel"><p className="muted">Loading event board…</p></div>}
+            <div className="hero__visual reveal-card">
+              <img src={heroLive} alt="Guests enjoying a live Endless Clicks event" />
+            </div>
+            {loading && (
+              <div className="featured-panel">
+                <p className="muted">Loading featured event…</p>
+              </div>
+            )}
             {error && <p className="form-alert form-alert--error">{error}</p>}
             {!loading && featured && (
               <div className="featured-panel">
@@ -99,20 +115,15 @@ export default function Home() {
               </div>
             )}
             {!loading && !featured && (
-              <div className="featured-panel empty-state">
-                <p className="eyebrow">Event board</p>
-                <h2>No published events yet</h2>
+              <div className="featured-panel">
+                <p className="eyebrow">Coming up</p>
+                <h2>Fresh dates are on the way</h2>
                 <p>
-                  When new events are added in Admin, this panel shows the next upcoming
-                  or live event with countdown, venue details, and live attendance counts.
+                  Follow Endless Clicks for the next Gaborone gathering — or tell us about
+                  an event you want hosted, planned, or promoted.
                 </p>
-                <ul className="list-check">
-                  <li>Countdown until doors open</li>
-                  <li>“Event is live” status during the programme</li>
-                  <li>Automatic move to the next queued event when one ends</li>
-                </ul>
                 <Link className="btn btn--primary" to="/contact">
-                  Enquire about hosting
+                  Talk to our team
                 </Link>
               </div>
             )}
@@ -122,107 +133,97 @@ export default function Home() {
 
       <section className="band-soft">
         <div className="section">
-          <div className="section__head">
+          <div className="section__head reveal-card">
             <p className="eyebrow">What we deliver</p>
-            <h2>A full-service event partner, not just a flyer.</h2>
+            <h2>Hosting, planning, and advertising — under one roof.</h2>
             <p>
-              Whether you need a polished corporate session, a public showcase, or a
-              community gathering, Endless Clicks covers the operational and promotional work
-              that turns an idea into an attended event.
+              Hover each card for more detail. Every engagement is tailored to your audience,
+              venue, and goals in Gaborone and beyond.
             </p>
           </div>
           <div className="services-grid">
-            <article className="info-card">
-              <p className="info-card__num">Service 01</p>
-              <h3>Event hosting</h3>
-              <p>
-                On-site coordination, guest flow, stage timing, partner activations, and
-                host support so the day runs calmly and professionally.
-              </p>
-            </article>
-            <article className="info-card">
-              <p className="info-card__num">Service 02</p>
-              <h3>Event planning</h3>
-              <p>
-                Concept development, schedules, vendor coordination, risk checks, run-of-show
-                documents, and clear ownership from kickoff to wrap.
-              </p>
-            </article>
-            <article className="info-card">
-              <p className="info-card__num">Service 03</p>
-              <h3>Event advertising</h3>
-              <p>
-                Campaign messaging, registration pages, reminders, and live attendance
-                signals that convert interest into confirmed guests.
-              </p>
-            </article>
+            <InteractiveCard
+              eyebrow="Service 01"
+              title="Event hosting"
+              summary="Calm, professional presence on the day — guest flow, stage timing, and partner support."
+              detail="Our hosts keep arrivals smooth, cues on time, and stakeholders aligned so you can focus on your guests."
+              image={hosting}
+              imageAlt="Event team coordinating a venue setup"
+            />
+            <InteractiveCard
+              eyebrow="Service 02"
+              title="Event planning"
+              summary="From concept and floor plans to suppliers and run-of-show documents."
+              detail="We map the full timeline, budgets, and contingencies so nothing important is left to chance."
+              image={planning}
+              imageAlt="Planners reviewing event floor plans"
+            />
+            <InteractiveCard
+              eyebrow="Service 03"
+              title="Event advertising"
+              summary="Clear messaging and registration that turn interest into confirmed attendance."
+              detail="We help you promote the date, capture guest details, and keep reminders consistent until doors open."
+              image={checkin}
+              imageAlt="Guests checking in at an Endless Clicks event"
+            />
           </div>
         </div>
       </section>
 
       <section className="section">
-        <div className="section__head">
-          <p className="eyebrow">How registration works</p>
-          <h2>Guests confirm. You see the room fill.</h2>
-          <p>
-            Every published event can collect guest details — name, contact information,
-            company or crew, guest count, and notes — so your team knows who is coming.
-          </p>
-        </div>
-        <div className="info-grid">
-          <article className="info-card">
-            <p className="info-card__num">Step 01</p>
-            <h3>Publish the event</h3>
-            <p>Add title, venue, times, capacity, and description from the admin panel.</p>
-          </article>
-          <article className="info-card">
-            <p className="info-card__num">Step 02</p>
-            <h3>Share the page</h3>
-            <p>Guests open the event page, review details, and register that they are attending.</p>
-          </article>
-          <article className="info-card">
-            <p className="info-card__num">Step 03</p>
-            <h3>Track live counts</h3>
-            <p>Attendance numbers update publicly while full guest lists stay in Admin.</p>
-          </article>
-          <article className="info-card">
-            <p className="info-card__num">Step 04</p>
-            <h3>Host with clarity</h3>
-            <p>Use the list for check-in, seating, catering numbers, and follow-up.</p>
-          </article>
+        <div className="split split--wide">
+          <div className="media-frame reveal-card">
+            <img src={venue} alt="Prepared event hall with stage and seating" />
+          </div>
+          <div className="reveal-card">
+            <p className="eyebrow">How guests take part</p>
+            <h2>Register once. Feel the room fill.</h2>
+            <p>
+              Each event page shares the essentials — time, place, and what to expect — then
+              invites guests to confirm attendance with their details. Live counts help everyone
+              see momentum building.
+            </p>
+            <ul className="list-check">
+              <li>Countdown to doors, then a clear “Event is live” status</li>
+              <li>Simple registration with name and contact information</li>
+              <li>Attendance numbers that update as people confirm</li>
+            </ul>
+            <Link className="btn btn--ghost" to="/events" style={{ marginTop: '0.5rem' }}>
+              See open events
+            </Link>
+          </div>
         </div>
       </section>
 
       <section className="band">
         <div className="section">
           <div className="split split--wide">
-            <div>
+            <div className="reveal-card">
               <p className="eyebrow">Why Endless Clicks</p>
               <h2>Built for turnout, timing, and trust.</h2>
               <p>
-                Too many events fail because promotion starts late, details stay unclear,
-                or nobody owns the guest experience. We treat attendance as a measurable outcome —
-                not a hopeful guess.
+                Great events fail when details are vague or promotion starts late. We treat
+                attendance as a measurable outcome — with clear pages, disciplined planning,
+                and hosting that feels intentional from arrival to wrap.
               </p>
               <ul className="list-check">
-                <li>Clear event pages with date, venue, and programme context</li>
-                <li>Countdown and live status so urgency feels natural, not forced</li>
-                <li>Registration data your team can export and act on</li>
-                <li>A queue system that always features the next relevant event</li>
+                <li>Gaborone-based team with Southern African reach</li>
+                <li>Practical timelines your stakeholders can follow</li>
+                <li>Guest communication that respects people’s time</li>
               </ul>
             </div>
-            <div className="stat-row">
+            <div className="stat-row reveal-card">
               <div className="stat-box">
                 <strong>3</strong>
-                <span>Core service pillars</span>
+                <span>Service pillars</span>
               </div>
               <div className="stat-box">
                 <strong>Live</strong>
-                <span>Guest count updates</span>
+                <span>Attendance pulse</span>
               </div>
               <div className="stat-box">
-                <strong>Admin</strong>
-                <span>Full guest list control</span>
+                <strong>BW</strong>
+                <span>Based in Gaborone</span>
               </div>
             </div>
           </div>
@@ -230,35 +231,32 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <div className="section__head">
-          <p className="eyebrow">Current lineup</p>
+        <div className="section__head reveal-card">
+          <p className="eyebrow">Lineup</p>
           <h2>Upcoming & live events</h2>
-          <p>
-            Published events appear here automatically. When one ends, the next queued
-            event takes the featured spot and starts its countdown.
-          </p>
+          <p>Confirm your spot on any open date — or ask us to create the next one with you.</p>
         </div>
         {events.length > 0 ? (
           <>
             <div className="event-grid">
               {events.slice(0, 3).map((event) => (
-                <div key={event.id}>
+                <div className="reveal-card" key={event.id}>
                   <EventCard event={event} stat={stats[event.id]} now={now} />
                 </div>
               ))}
             </div>
-            <div className="section__cta">
+            <div className="section__cta reveal-card">
               <Link className="btn btn--ghost" to="/events">
                 See all events
               </Link>
             </div>
           </>
         ) : (
-          <div className="empty-state">
-            <h3>Lineup coming soon</h3>
+          <div className="empty-state reveal-card">
+            <h3>New dates coming soon</h3>
             <p className="muted">
-              There are no published events at the moment. Check back shortly, or contact
-              Endless Clicks if you want us to plan and advertise your next gathering.
+              We are preparing the next Endless Clicks experiences in Gaborone. Reach out if
+              you would like us to host, plan, or advertise an event for your organisation.
             </p>
             <Link className="btn btn--primary" to="/contact">
               Contact the team
@@ -269,26 +267,26 @@ export default function Home() {
 
       <section className="band-soft">
         <div className="section">
-          <div className="section__head">
+          <div className="section__head reveal-card">
             <p className="eyebrow">Working process</p>
             <h2>From brief to packed room</h2>
           </div>
           <div className="process-steps">
-            <article className="process-step">
+            <article className="process-step reveal-card">
               <h3>Discovery</h3>
-              <p>We align on goals, audience, date options, budget range, and success metrics.</p>
+              <p>Goals, audience, date options, and what success should look like.</p>
             </article>
-            <article className="process-step">
+            <article className="process-step reveal-card">
               <h3>Planning</h3>
-              <p>We lock venue flow, programme structure, vendors, and communication timeline.</p>
+              <p>Venue flow, programme structure, suppliers, and communication timeline.</p>
             </article>
-            <article className="process-step">
+            <article className="process-step reveal-card">
               <h3>Promotion</h3>
-              <p>We publish the event, drive registrations, and keep reminders consistent.</p>
+              <p>Event pages, registration, and reminders that keep the date top of mind.</p>
             </article>
-            <article className="process-step">
+            <article className="process-step reveal-card">
               <h3>Delivery</h3>
-              <p>We host the experience, track attendance, and hand over clear wrap notes.</p>
+              <p>On-site hosting, live attendance awareness, and a clean handoff at wrap.</p>
             </article>
           </div>
         </div>
@@ -296,39 +294,39 @@ export default function Home() {
 
       <section className="section">
         <div className="split">
-          <div>
+          <div className="reveal-card">
             <p className="eyebrow">Quick answers</p>
             <h2>Common questions</h2>
             <div className="faq">
               <details>
-                <summary>Can guests register without buying tickets?</summary>
+                <summary>Do guests need to buy tickets to register?</summary>
                 <p>
-                  Yes. This platform is built for RSVP-style registration — guests confirm
-                  attendance and share key details so you can prepare properly.
+                  Not necessarily. Many Endless Clicks events use RSVP-style registration so
+                  we know who is coming and can prepare properly.
                 </p>
               </details>
               <details>
-                <summary>Where do I manage guest lists?</summary>
+                <summary>Where are you based?</summary>
                 <p>
-                  Sign in at the Admin page to add events, publish or hide them, review
-                  registrations, and export CSV files.
+                  We are based in Gaborone, Botswana, and support events locally as well as
+                  selected regional productions.
                 </p>
               </details>
               <details>
-                <summary>What happens when an event ends?</summary>
+                <summary>How do I start planning with you?</summary>
                 <p>
-                  The site stops featuring that event as live/upcoming and automatically
-                  promotes the next published event in the queue.
+                  Send a note via Contact with your date window, audience size, and goals.
+                  We will respond with availability and a practical next step.
                 </p>
               </details>
             </div>
           </div>
-          <div className="info-card">
+          <div className="info-card reveal-card">
             <p className="eyebrow">Next step</p>
             <h2>Ready to plan your event?</h2>
             <p>
-              Tell us the date, city, audience size, and outcome you need. We will respond
-              with availability and a practical planning outline.
+              Tell us the date, venue status, and outcome you need. We will come back with
+              a clear planning outline.
             </p>
             <Link className="btn btn--primary" to="/contact">
               Get in touch

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import logoDark from '../assets/logo-dark.png'
+import logoLight from '../assets/logo-light.jpg'
 
 export default function Footer() {
   return (
@@ -7,10 +7,10 @@ export default function Footer() {
       <div className="footer__inner">
         <div className="footer__grid">
           <div>
-            <img className="footer__logo" src={logoDark} alt="Endless Clicks" />
+            <img className="footer__logo" src={logoLight} alt="Endless Clicks" />
             <p>
-              Endless Clicks Pty Ltd is an event hosting, planning, and advertising
-              company helping brands and communities fill rooms with the right people.
+              Endless Clicks Pty Ltd hosts, plans, and advertises professional events
+              from Gaborone, Botswana — helping people gather with clarity and style.
             </p>
           </div>
           <div>
@@ -18,12 +18,11 @@ export default function Footer() {
             <Link to="/events">Events</Link>
             <Link to="/about">About</Link>
             <Link to="/contact">Contact</Link>
-            <Link to="/admin">Admin</Link>
           </div>
           <div>
             <h4>Contact</h4>
-            <p>Gaborone · Johannesburg · Regional pop-ups</p>
-            <a href="mailto:hello@endlessclicks.co.za">hello@endlessclicks.co.za</a>
+            <p>Gaborone, Botswana</p>
+            <a href="mailto:info@endlessclicks.co.bw">info@endlessclicks.co.bw</a>
             <p>Mon–Fri · 09:00–17:00</p>
           </div>
         </div>

@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import EventCard from '../components/EventCard'
+import InteractiveCard from '../components/InteractiveCard'
 import { useEvents } from '../hooks/useEvents'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import { getEventStatus } from '../lib/events'
 import { enterStagger } from '../lib/motion'
+import venue from '../assets/photos/venue.jpg'
+import checkin from '../assets/photos/checkin.jpg'
+import heroLive from '../assets/photos/hero-live.jpg'
 
 gsap.registerPlugin(useGSAP)
 
@@ -24,37 +29,46 @@ export default function Events() {
     { scope: root, dependencies: [loading] },
   )
 
+  useScrollReveal(root, '.reveal-card', [events.length, loading])
+
   return (
     <div ref={root} className="page">
       <header className="page-hero">
         <p className="eyebrow">Events</p>
-        <h1>Event board</h1>
+        <h1>Gatherings worth your evening</h1>
         <p className="lead">
-          Browse upcoming and live programmes from Endless Clicks. Each event page includes
-          schedule details, venue information, a countdown or live status, and a registration
-          form so guests can confirm they are attending.
+          Explore upcoming and live programmes from Endless Clicks in Gaborone. Each page
+          shares the details that matter — then invites you to confirm you are coming.
         </p>
       </header>
 
       <section className="band-soft" style={{ marginBottom: '2rem' }}>
         <div className="section" style={{ paddingTop: '1.6rem', paddingBottom: '1.6rem' }}>
-          <div className="info-grid">
-            <article className="info-card">
-              <h3>Upcoming</h3>
-              <p>Shows a countdown to start time so guests know exactly when doors open.</p>
-            </article>
-            <article className="info-card">
-              <h3>Live</h3>
-              <p>During the event window, status switches to “Event is live”.</p>
-            </article>
-            <article className="info-card">
-              <h3>Next in queue</h3>
-              <p>When one event ends, the next published event becomes featured automatically.</p>
-            </article>
-            <article className="info-card">
-              <h3>Register</h3>
-              <p>Guests submit name and key details. Live counts update on the public pages.</p>
-            </article>
+          <div className="services-grid">
+            <InteractiveCard
+              eyebrow="Experience"
+              title="Before doors"
+              summary="Countdowns, venue details, and clear expectations so guests arrive prepared."
+              detail="Every listing highlights when and where to show up, plus what the evening is about."
+              image={venue}
+              imageAlt="Event venue prepared for guests"
+            />
+            <InteractiveCard
+              eyebrow="Experience"
+              title="Arrival"
+              summary="Smooth check-in and a warm first impression as people step in."
+              detail="Registration details help our team welcome the right guests without the chaos."
+              image={checkin}
+              imageAlt="Event check-in desk"
+            />
+            <InteractiveCard
+              eyebrow="Experience"
+              title="In the room"
+              summary="Live energy, attentive hosting, and moments that feel considered."
+              detail="When an event is underway, status updates to live so everyone knows the programme has begun."
+              image={heroLive}
+              imageAlt="Audience at a live event"
+            />
           </div>
         </div>
       </section>
@@ -67,7 +81,9 @@ export default function Events() {
           <h2 className="section-title">Happening now</h2>
           <div className="event-grid">
             {live.map((event) => (
-              <EventCard key={event.id} event={event} stat={stats[event.id]} now={now} />
+              <div className="reveal-card" key={event.id}>
+                <EventCard event={event} stat={stats[event.id]} now={now} />
+              </div>
             ))}
           </div>
         </section>
@@ -76,12 +92,11 @@ export default function Events() {
       <section className="section" style={{ paddingTop: live.length ? undefined : 0 }}>
         <h2 className="section-title">Upcoming</h2>
         {upcoming.length === 0 && !loading ? (
-          <div className="empty-state">
-            <h3>No upcoming events published</h3>
+          <div className="empty-state reveal-card">
+            <h3>New dates coming soon</h3>
             <p className="muted">
-              New events will appear here once they are added and published in Admin.
-              If you are planning a programme and need hosting, planning, or advertising
-              support, contact the Endless Clicks team.
+              Fresh Endless Clicks experiences are being prepared for Gaborone. If you want
+              a private or branded event hosted, planned, or promoted, we would love to talk.
             </p>
             <Link className="btn btn--primary" to="/contact">
               Enquire about an event
@@ -90,7 +105,9 @@ export default function Events() {
         ) : (
           <div className="event-grid">
             {upcoming.map((event) => (
-              <EventCard key={event.id} event={event} stat={stats[event.id]} now={now} />
+              <div className="reveal-card" key={event.id}>
+                <EventCard event={event} stat={stats[event.id]} now={now} />
+              </div>
             ))}
           </div>
         )}
@@ -101,7 +118,9 @@ export default function Events() {
           <h2 className="section-title">Recently completed</h2>
           <div className="event-grid">
             {past.map((event) => (
-              <EventCard key={event.id} event={event} stat={stats[event.id]} now={now} />
+              <div className="reveal-card" key={event.id}>
+                <EventCard event={event} stat={stats[event.id]} now={now} />
+              </div>
             ))}
           </div>
         </section>

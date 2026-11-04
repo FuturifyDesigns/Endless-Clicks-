@@ -330,6 +330,213 @@ main {
   font-size: 0.9rem;
 }
 
+.hero__stage {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero__visual,
+.media-frame {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: var(--black);
+}
+
+.hero__visual img,
+.media-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__visual {
+  min-height: 220px;
+  max-height: 280px;
+}
+
+.media-frame {
+  min-height: 280px;
+}
+
+.media-frame--sm {
+  min-height: 180px;
+  margin-bottom: 1rem;
+}
+
+.ix-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.ix-card:hover,
+.ix-card:focus-visible,
+.ix-card.is-open {
+  transform: translateY(-4px);
+  border-color: var(--blue);
+  box-shadow: 0 16px 36px rgba(18, 20, 23, 0.12);
+  outline: none;
+}
+
+.ix-card__media {
+  height: 160px;
+  overflow: hidden;
+}
+
+.ix-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.ix-card:hover .ix-card__media img,
+.ix-card.is-open .ix-card__media img {
+  transform: scale(1.05);
+}
+
+.ix-card__body {
+  padding: 1.15rem;
+}
+
+.ix-card__detail {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.25s ease;
+  margin-top: 0;
+}
+
+.ix-card.is-open .ix-card__detail {
+  max-height: 140px;
+  opacity: 1;
+  margin-top: 0.55rem;
+}
+
+.ix-card__detail p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.ix-card__hint {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--blue-deep);
+}
+
+.photo-mosaic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.photo-mosaic figure {
+  margin: 0;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.photo-mosaic img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.photo-mosaic figcaption {
+  padding: 0.85rem 1rem 1rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.tree-section {
+  position: relative;
+}
+
+.tree {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1rem 0 2rem;
+}
+
+.tree__trunk {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  transform: translateX(-50%);
+  background: #d5e4f0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.tree__sap {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: top center;
+  background: linear-gradient(180deg, var(--blue), var(--blue-deep));
+}
+
+.tree-node {
+  position: relative;
+  width: min(42%, 360px);
+  margin-bottom: 2rem;
+}
+
+.tree-node--left {
+  margin-right: auto;
+  padding-right: 1.5rem;
+}
+
+.tree-node--right {
+  margin-left: auto;
+  padding-left: 1.5rem;
+}
+
+.tree-node__card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+}
+
+.tree-node__card::before {
+  content: '';
+  position: absolute;
+  top: 1.6rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 3px solid var(--white);
+  box-shadow: 0 0 0 2px var(--blue-deep);
+}
+
+.tree-node--left .tree-node__card::before {
+  right: -0.35rem;
+}
+
+.tree-node--right .tree-node__card::before {
+  left: -0.35rem;
+}
+
 .panel,
 .featured-panel,
 .detail-panel,
@@ -385,6 +592,27 @@ main {
 
 .band p {
   color: rgba(255, 255, 255, 0.78);
+}
+
+.band .list-check li {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.band .list-check li::before {
+  background: var(--blue);
+}
+
+.band .stat-box {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.band .stat-box strong {
+  color: var(--white);
+}
+
+.band .stat-box span {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .band-soft {
@@ -834,12 +1062,13 @@ main {
   color: var(--muted);
 }
 
-/* FOOTER */
+/* FOOTER — light so logo-light reads clearly */
 .footer {
   margin-top: 2rem;
   padding: 2.8rem 0 1.6rem;
-  background: var(--black);
-  color: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(180deg, #eef5fb 0%, #e3eef8 100%);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
   width: 100%;
   max-width: none;
 }
@@ -856,31 +1085,35 @@ main {
 }
 
 .footer__logo {
-  width: 72px;
+  width: 96px;
   margin-bottom: 0.8rem;
+  border-radius: 8px;
+  background: var(--white);
+  padding: 0.35rem;
+  border: 1px solid var(--line);
 }
 
 .footer h4 {
-  color: var(--white);
+  color: var(--black);
   margin-bottom: 0.75rem;
 }
 
 .footer a,
 .footer p {
   display: block;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--muted);
   margin-bottom: 0.4rem;
 }
 
 .footer a:hover,
 .footer a:active {
-  color: var(--blue);
+  color: var(--blue-deep);
 }
 
 .footer__bottom {
   margin-top: 1.8rem;
   padding-top: 1.1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid var(--line);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -891,11 +1124,12 @@ main {
 .footer__credit {
   margin: 0;
   font-size: 0.9rem;
+  color: var(--muted);
 }
 
 .footer__credit a {
   display: inline;
-  color: var(--blue);
+  color: var(--blue-deep);
   font-weight: 700;
 }
 
@@ -1082,8 +1316,31 @@ main {
   .admin-stats,
   .stat-row,
   .hero__meta,
-  .register-form__grid {
+  .register-form__grid,
+  .photo-mosaic {
     grid-template-columns: 1fr;
+  }
+
+  .tree-node,
+  .tree-node--left,
+  .tree-node--right {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1.75rem;
+    padding-right: 0;
+  }
+
+  .tree__trunk {
+    left: 0.35rem;
+    transform: none;
+  }
+
+  .tree-node__card::before,
+  .tree-node--left .tree-node__card::before,
+  .tree-node--right .tree-node__card::before {
+    left: 0.05rem;
+    right: auto;
   }
 
   .hero__actions {
