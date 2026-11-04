@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Countdown from '../components/Countdown'
 import EventCard from '../components/EventCard'
 import AttendanceMeter from '../components/AttendanceMeter'
@@ -10,15 +11,14 @@ import InteractiveCard from '../components/InteractiveCard'
 import { useEvents } from '../hooks/useEvents'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { formatEventDate, getEventStatus } from '../lib/events'
-import { enter, enterStagger } from '../lib/motion'
-import logoLight from '../assets/logo-light.jpg'
+import logo from '../assets/logo-transparent.png'
 import heroLive from '../assets/photos/hero-live.jpg'
-import hosting from '../assets/photos/hosting.jpg'
-import venue from '../assets/photos/venue.jpg'
+import workflowDiscover from '../assets/photos/workflow-discover.jpg'
+import workflowPlan from '../assets/photos/workflow-plan.jpg'
+import workflowPromo from '../assets/photos/workflow-promo.jpg'
 import checkin from '../assets/photos/checkin.jpg'
-import planning from '../assets/photos/planning.jpg'
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export default function Home() {
   const root = useRef(null)
@@ -28,8 +28,37 @@ export default function Home() {
 
   useGSAP(
     () => {
-      gsap.from('.hero__copy > *', { ...enterStagger })
-      gsap.from('.hero__visual, .featured-panel', { ...enter, delay: 0.1 })
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        tl.from('.hero__brand', { y: 24, autoAlpha: 0, duration: 0.7 })
+          .from('.hero__copy .eyebrow, .hero__copy h1, .hero__copy .lead', {
+            y: 36,
+            autoAlpha: 0,
+            duration: 0.75,
+            stagger: 0.1,
+          }, '-=0.35')
+          .from('.hero__actions, .hero__meta', { y: 20, autoAlpha: 0, duration: 0.55, stagger: 0.08 }, '-=0.35')
+          .from('.hero__visual', {
+            clipPath: 'inset(12% 12% 12% 12% round 16px)',
+            scale: 1.08,
+            duration: 1.05,
+            ease: 'power2.inOut',
+          }, '-=0.85')
+          .from('.featured-panel', { y: 28, autoAlpha: 0, duration: 0.65 }, '-=0.55')
+
+        gsap.to('.hero__visual img', {
+          yPercent: 12,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
+      })
+      return () => mm.revert()
     },
     { scope: root, dependencies: [loading, featured?.id] },
   )
@@ -38,22 +67,18 @@ export default function Home() {
 
   return (
     <div ref={root}>
-      <section className="hero">
+      <section className="hero hero--tight">
         <div className="hero__grid">
           <div className="hero__copy">
-            <img className="hero__brand" src={logoLight} alt="Endless Clicks" />
+            <img className="hero__brand" src={logo} alt="Endless Clicks" />
             <p className="eyebrow hero__kicker">Gaborone, Botswana</p>
             <h1>Discover Endless Clicks events — and confirm you are going.</h1>
             <p className="lead">
-              This is the official board for upcoming Endless Clicks events. Browse what’s
-              next in Gaborone, follow the countdown, and register with your details so we
-              know you are coming.
+              The official board for upcoming Endless Clicks events. Browse what’s next,
+              follow the countdown, and register so we know you are coming.
             </p>
             <div className="hero__actions">
-              <Link
-                className="btn btn--primary"
-                to={featured ? `/events/${featured.slug}` : '/events'}
-              >
+              <Link className="btn btn--primary" to={featured ? `/events/${featured.slug}` : '/events'}>
                 {featured ? 'Register for this event' : 'Browse events'}
               </Link>
               <Link className="btn btn--ghost" to="/about">
@@ -67,7 +92,7 @@ export default function Home() {
               </div>
               <div>
                 <strong>Live</strong>
-                <span>Know what’s on now</span>
+                <span>Know what’s on</span>
               </div>
               <div>
                 <strong>Register</strong>
@@ -120,7 +145,6 @@ export default function Home() {
                 <h2>New Endless Clicks dates soon</h2>
                 <p>
                   Fresh events will appear here with countdown, venue details, and registration.
-                  Follow along or reach out if you have a question about an upcoming night.
                 </p>
                 <Link className="btn btn--primary" to="/contact">
                   Contact us
@@ -132,103 +156,68 @@ export default function Home() {
       </section>
 
       <section className="band-soft">
-        <div className="section">
+        <div className="section section--tight">
           <div className="section__head reveal-card">
-            <p className="eyebrow">What you will find here</p>
+            <p className="eyebrow">What you will find</p>
             <h2>Everything you need before you show up.</h2>
-            <p>
-              Endless Clicks posts its events on this site so guests can explore details,
-              watch the countdown, and register attendance in one place.
-            </p>
           </div>
           <div className="services-grid">
             <InteractiveCard
               eyebrow="01"
               title="Event details"
-              summary="Date, venue, and what the night is about — clearly laid out."
-              detail="Each listing helps you decide quickly whether the event is for you and how to prepare."
-              image={venue}
-              imageAlt="Prepared event venue"
+              summary="Date, venue, and what the night is about."
+              detail="Each listing helps you decide quickly and arrive prepared."
+              image={workflowDiscover}
+              imageAlt="Team reviewing event plans"
             />
             <InteractiveCard
               eyebrow="02"
               title="Live status"
-              summary="Countdowns for upcoming events, and a live marker when the programme starts."
-              detail="When one event ends, the next Endless Clicks event moves into focus automatically."
-              image={hosting}
-              imageAlt="Event space being prepared"
+              summary="Countdowns for upcoming events, live when it starts."
+              detail="When one event ends, the next Endless Clicks listing takes focus."
+              image={workflowPlan}
+              imageAlt="Event planning on site"
             />
             <InteractiveCard
               eyebrow="03"
               title="Easy registration"
-              summary="Confirm you are coming with your name and contact details."
-              detail="Live attendance counts update as guests register, so you can see the room filling up."
-              image={checkin}
-              imageAlt="Guests checking in at an event"
+              summary="Confirm you are coming with your details."
+              detail="Live attendance counts update as guests register."
+              image={workflowPromo}
+              imageAlt="Creative team preparing event promotion"
             />
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section--tight">
         <div className="split split--wide">
           <div className="media-frame reveal-card">
-            <img src={planning} alt="Endless Clicks event planning materials" />
+            <img src={checkin} alt="Guests checking in" />
           </div>
           <div className="reveal-card">
             <p className="eyebrow">How it works</p>
             <h2>Browse. Register. Arrive ready.</h2>
             <p>
-              Open an event page, read the essentials, then confirm your attendance. That’s it —
-              no complicated steps, just clear information from Endless Clicks.
+              Open an event page, read the essentials, then confirm your attendance —
+              clear information from Endless Clicks, nothing extra.
             </p>
             <ul className="list-check">
               <li>See upcoming and live Endless Clicks events</li>
-              <li>Register with your details so we expect you</li>
-              <li>Watch live “going” counts as guests confirm</li>
+              <li>Register so we expect you</li>
+              <li>Watch live “going” counts</li>
             </ul>
-            <Link className="btn btn--ghost" to="/events" style={{ marginTop: '0.5rem' }}>
+            <Link className="btn btn--ghost" to="/events">
               Go to events
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="band">
-        <div className="section">
-          <div className="split split--wide">
-            <div className="reveal-card">
-              <p className="eyebrow">Endless Clicks</p>
-              <h2>Events posted by us, for people who want to be there.</h2>
-              <p>
-                This website is the public home for Endless Clicks event listings in Gaborone.
-                Discover what’s coming, mark yourself as going, and stay close to the nights
-                that matter.
-              </p>
-            </div>
-            <div className="stat-row reveal-card">
-              <div className="stat-box">
-                <strong>BW</strong>
-                <span>Based in Gaborone</span>
-              </div>
-              <div className="stat-box">
-                <strong>Live</strong>
-                <span>Status updates</span>
-              </div>
-              <div className="stat-box">
-                <strong>RSVP</strong>
-                <span>Confirm attendance</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
+      <section className="section section--tight">
         <div className="section__head reveal-card">
           <p className="eyebrow">Lineup</p>
           <h2>Upcoming & live events</h2>
-          <p>Register for any open Endless Clicks date and we will look forward to seeing you.</p>
         </div>
         {events.length > 0 ? (
           <>
@@ -249,57 +238,13 @@ export default function Home() {
           <div className="empty-state reveal-card">
             <h3>New dates coming soon</h3>
             <p className="muted">
-              Endless Clicks is preparing the next listings. Check back shortly, or contact
-              us if you have a question about an upcoming event.
+              Endless Clicks is preparing the next listings. Check back shortly or contact us.
             </p>
             <Link className="btn btn--primary" to="/contact">
               Contact us
             </Link>
           </div>
         )}
-      </section>
-
-      <section className="section">
-        <div className="split">
-          <div className="reveal-card">
-            <p className="eyebrow">Quick answers</p>
-            <h2>Common questions</h2>
-            <div className="faq">
-              <details>
-                <summary>What is this website for?</summary>
-                <p>
-                  It advertises Endless Clicks events and lets guests register that they are
-                  attending.
-                </p>
-              </details>
-              <details>
-                <summary>Do I need a ticket to register?</summary>
-                <p>
-                  Many listings use simple RSVP registration so we know who is coming. Each
-                  event page will note anything extra you need to know.
-                </p>
-              </details>
-              <details>
-                <summary>Where are the events held?</summary>
-                <p>
-                  Endless Clicks is based in Gaborone, Botswana. Venue details appear on each
-                  event page.
-                </p>
-              </details>
-            </div>
-          </div>
-          <div className="info-card reveal-card">
-            <p className="eyebrow">Stay in touch</p>
-            <h2>Questions about an event?</h2>
-            <p>
-              Email the team and we will help with details, accessibility notes, or anything
-              else you need before the night.
-            </p>
-            <Link className="btn btn--primary" to="/contact">
-              Contact Endless Clicks
-            </Link>
-          </div>
-        </div>
       </section>
     </div>
   )

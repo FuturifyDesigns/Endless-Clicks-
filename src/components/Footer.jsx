@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import logoLight from '../assets/logo-light.jpg'
+import logo from '../assets/logo-transparent.png'
 
 export default function Footer() {
   return (
@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="footer__inner">
         <div className="footer__grid">
           <div>
-            <img className="footer__logo" src={logoLight} alt="Endless Clicks" />
+            <img className="footer__logo" src={logo} alt="Endless Clicks" />
             <p>
               Endless Clicks Pty Ltd advertises upcoming events in Gaborone, Botswana —
               so guests can discover what’s next and confirm they are coming.

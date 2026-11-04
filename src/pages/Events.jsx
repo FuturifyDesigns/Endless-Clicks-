@@ -2,17 +2,17 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import EventCard from '../components/EventCard'
-import InteractiveCard from '../components/InteractiveCard'
 import { useEvents } from '../hooks/useEvents'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { getEventStatus } from '../lib/events'
-import { enterStagger } from '../lib/motion'
 import venue from '../assets/photos/venue.jpg'
-import checkin from '../assets/photos/checkin.jpg'
 import heroLive from '../assets/photos/hero-live.jpg'
+import workflowDeliver from '../assets/photos/workflow-deliver.jpg'
+import hosting from '../assets/photos/hosting.jpg'
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export default function Events() {
   const root = useRef(null)
@@ -24,7 +24,55 @@ export default function Events() {
 
   useGSAP(
     () => {
-      gsap.from('.page-hero > *', { ...enterStagger })
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        tl.from('.events-hero__eyebrow', { y: 20, autoAlpha: 0, duration: 0.5 })
+          .from('.events-hero h1', { y: 48, autoAlpha: 0, duration: 0.85 }, '-=0.2')
+          .from('.events-hero__lead', { y: 24, autoAlpha: 0, duration: 0.55 }, '-=0.4')
+          .from('.events-hero__media', {
+            clipPath: 'inset(100% 0 0 0)',
+            duration: 1.1,
+            ease: 'power4.inOut',
+          }, '-=0.55')
+          .from('.events-hero__stats > *', {
+            y: 24,
+            autoAlpha: 0,
+            stagger: 0.08,
+            duration: 0.5,
+          }, '-=0.35')
+
+        gsap.to('.events-hero__media img', {
+          scale: 1.12,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.events-hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
+
+        gsap.utils.toArray('.events-spotlight').forEach((el) => {
+          gsap.fromTo(
+            el,
+            { autoAlpha: 0, y: 40, rotateX: 6 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              rotateX: 0,
+              duration: 0.8,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                toggleActions: 'play reverse play reverse',
+              },
+            },
+          )
+        })
+      })
+      return () => mm.revert()
     },
     { scope: root, dependencies: [loading] },
   )
@@ -32,54 +80,78 @@ export default function Events() {
   useScrollReveal(root, '.reveal-card', [events.length, loading])
 
   return (
-    <div ref={root} className="page">
-      <header className="page-hero">
-        <p className="eyebrow">Events</p>
-        <h1>Endless Clicks events</h1>
-        <p className="lead">
-          Browse upcoming and live events posted by Endless Clicks in Gaborone. Open a
-          listing for details, follow the countdown, and register that you are coming.
-        </p>
-      </header>
-
-      <section className="band-soft" style={{ marginBottom: '2rem' }}>
-        <div className="section" style={{ paddingTop: '1.6rem', paddingBottom: '1.6rem' }}>
-          <div className="services-grid">
-            <InteractiveCard
-              eyebrow="Guest tip"
-              title="Before the night"
-              summary="Read the date, venue, and description so you know exactly what to expect."
-              detail="Every Endless Clicks listing is written to help you decide and prepare with confidence."
-              image={venue}
-              imageAlt="Event venue seating"
-            />
-            <InteractiveCard
-              eyebrow="Guest tip"
-              title="Register your spot"
-              summary="Confirm attendance with your name and contact details."
-              detail="Live counts update as guests register, so you can see interest building."
-              image={checkin}
-              imageAlt="Event check-in"
-            />
-            <InteractiveCard
-              eyebrow="Guest tip"
-              title="When it is live"
-              summary="Live events are marked clearly while the programme is underway."
-              detail="After an event ends, the next Endless Clicks listing moves forward on the board."
-              image={heroLive}
-              imageAlt="Live event audience"
-            />
+    <div ref={root} className="page page--flush">
+      <section className="events-hero">
+        <div className="events-hero__copy">
+          <p className="eyebrow events-hero__eyebrow">The heart of Endless Clicks</p>
+          <h1>Events worth showing up for.</h1>
+          <p className="lead events-hero__lead">
+            Browse upcoming and live listings posted by Endless Clicks in Gaborone.
+            Open a night, follow the countdown, and register that you are coming.
+          </p>
+        </div>
+        <div className="events-hero__media">
+          <img src={venue} alt="Endless Clicks event venue ready for guests" />
+          <div className="events-hero__overlay">
+            <span>Gaborone</span>
+            <strong>Event board</strong>
+          </div>
+        </div>
+        <div className="events-hero__stats">
+          <div>
+            <strong>{upcoming.length}</strong>
+            <span>Upcoming</span>
+          </div>
+          <div>
+            <strong>{live.length}</strong>
+            <span>Live now</span>
+          </div>
+          <div>
+            <strong>{events.length}</strong>
+            <span>Listed</span>
           </div>
         </div>
       </section>
 
-      {loading && <p className="muted">Loading events…</p>}
-      {error && <p className="form-alert form-alert--error">{error}</p>}
+      <section className="section section--tight">
+        <div className="events-spotlight-grid">
+          <article className="events-spotlight">
+            <img src={heroLive} alt="Audience enjoying a live event" />
+            <div>
+              <p className="eyebrow">Atmosphere</p>
+              <h3>Nights that feel alive</h3>
+              <p>From first look to last cheer — Endless Clicks listings showcase the energy of each gathering.</p>
+            </div>
+          </article>
+          <article className="events-spotlight">
+            <img src={workflowDeliver} alt="Coordinator managing a live programme" />
+            <div>
+              <p className="eyebrow">On the night</p>
+              <h3>Clear status, smooth arrivals</h3>
+              <p>Live markers and registration keep guests informed from countdown to doors.</p>
+            </div>
+          </article>
+          <article className="events-spotlight">
+            <img src={hosting} alt="Team preparing the room" />
+            <div>
+              <p className="eyebrow">Before doors</p>
+              <h3>Details you can trust</h3>
+              <p>Venue, timing, and context — everything you need before you decide to go.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {loading && <p className="muted wrap">Loading events…</p>}
+      {error && <p className="form-alert form-alert--error wrap">{error}</p>}
 
       {live.length > 0 && (
-        <section className="section" style={{ paddingTop: 0 }}>
-          <h2 className="section-title">Happening now</h2>
-          <div className="event-grid">
+        <section className="section section--tight">
+          <div className="section__head reveal-card">
+            <p className="eyebrow">Happening now</p>
+            <h2>Live Endless Clicks events</h2>
+          </div>
+          <div className="event-grid event-grid--featured">
             {live.map((event) => (
               <div className="reveal-card" key={event.id}>
                 <EventCard event={event} stat={stats[event.id]} now={now} />
@@ -89,14 +161,17 @@ export default function Events() {
         </section>
       )}
 
-      <section className="section" style={{ paddingTop: live.length ? undefined : 0 }}>
-        <h2 className="section-title">Upcoming</h2>
+      <section className="section section--tight band-soft">
+        <div className="section__head reveal-card">
+          <p className="eyebrow">Upcoming</p>
+          <h2>Reserve your place</h2>
+          <p>Register on any open listing so Endless Clicks knows you are coming.</p>
+        </div>
         {upcoming.length === 0 && !loading ? (
           <div className="empty-state reveal-card">
-            <h3>New Endless Clicks dates soon</h3>
+            <h3>New dates coming soon</h3>
             <p className="muted">
-              Fresh listings will appear here when they are ready. For questions about a
-              coming event, contact the team in Gaborone.
+              Fresh Endless Clicks listings will appear here. Questions? Reach us in Gaborone.
             </p>
             <Link className="btn btn--primary" to="/contact">
               Contact us
@@ -114,8 +189,11 @@ export default function Events() {
       </section>
 
       {past.length > 0 && (
-        <section className="section">
-          <h2 className="section-title">Recently completed</h2>
+        <section className="section section--tight">
+          <div className="section__head reveal-card">
+            <p className="eyebrow">Recently completed</p>
+            <h2>Moments that already happened</h2>
+          </div>
           <div className="event-grid">
             {past.map((event) => (
               <div className="reveal-card" key={event.id}>

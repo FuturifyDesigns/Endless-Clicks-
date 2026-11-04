@@ -34,7 +34,7 @@ export default function InteractiveCard({
             <p>{detail}</p>
           </div>
         )}
-        <span className="ix-card__hint">{open ? 'Close' : 'Hover or focus for more'}</span>
+        <span className="ix-card__hint">{open ? 'Hide detail' : 'More detail'}</span>
       </div>
     </article>
   )

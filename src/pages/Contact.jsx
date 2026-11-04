@@ -2,10 +2,9 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { enterStagger } from '../lib/motion'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import consult from '../assets/photos/consult.jpg'
-import checkin from '../assets/photos/checkin.jpg'
+import workflowPromo from '../assets/photos/workflow-promo.jpg'
+import workflowPlan from '../assets/photos/workflow-plan.jpg'
 
 gsap.registerPlugin(useGSAP)
 
@@ -15,7 +14,14 @@ export default function Contact() {
 
   useGSAP(
     () => {
-      gsap.from('.contact-wrap > header > *', { ...enterStagger })
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        tl.from('.contact-wrap > header > *', { x: -28, autoAlpha: 0, duration: 0.65, stagger: 0.08 })
+          .from('.contact-panel--info', { x: -40, autoAlpha: 0, duration: 0.7 }, '-=0.35')
+          .from('.contact-panel--form', { x: 40, autoAlpha: 0, duration: 0.7 }, '-=0.55')
+      })
+      return () => mm.revert()
     },
     { scope: root },
   )
@@ -30,7 +36,7 @@ export default function Contact() {
   return (
     <div ref={root} className="page">
       <div className="contact-wrap">
-        <header>
+        <header className="contact-hero">
           <p className="eyebrow">Contact</p>
           <h1>Questions about an Endless Clicks event?</h1>
           <p className="lead">
@@ -40,9 +46,9 @@ export default function Contact() {
         </header>
 
         <div className="contact-grid">
-          <div className="info-card reveal-card">
+          <div className="info-card contact-panel--info">
             <div className="media-frame media-frame--sm">
-              <img src={consult} alt="Speaking with the Endless Clicks team" />
+              <img src={workflowPromo} alt="Endless Clicks creative team" />
             </div>
             <h2>Contact details</h2>
             <div className="content-block">
@@ -67,7 +73,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="register-form info-card reveal-card" onSubmit={handleSubmit}>
+          <form className="register-form info-card contact-panel--form" onSubmit={handleSubmit}>
             <h2>Send a message</h2>
             <div className="register-form__grid">
               <label>
@@ -88,12 +94,7 @@ export default function Contact() {
               </label>
               <label className="register-form__full">
                 Message
-                <textarea
-                  required
-                  rows="6"
-                  name="message"
-                  placeholder="How can we help?"
-                />
+                <textarea required rows="6" name="message" placeholder="How can we help?" />
               </label>
             </div>
             {sent ? (
@@ -108,17 +109,17 @@ export default function Contact() {
           </form>
         </div>
 
-        <section className="section" style={{ paddingBottom: 0 }}>
+        <section className="section section--tight">
           <div className="split split--wide">
             <div className="media-frame reveal-card">
-              <img src={checkin} alt="Guests arriving at an Endless Clicks event" />
+              <img src={workflowPlan} alt="Event planning discussion" />
             </div>
             <div className="reveal-card">
-              <p className="eyebrow">Before you write</p>
-              <h2>Looking for an event instead?</h2>
+              <p className="eyebrow">Looking for an event?</p>
+              <h2>Browse the board instead</h2>
               <p>
-                Browse the Events page to see upcoming and live Endless Clicks listings, then
-                register directly on the event page.
+                See upcoming and live Endless Clicks listings, then register directly on the
+                event page.
               </p>
               <Link className="btn btn--ghost" to="/events">
                 Browse events

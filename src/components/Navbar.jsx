@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import logoLight from '../assets/logo-light.jpg'
+import logo from '../assets/logo-transparent.png'
 
 const links = [
   { to: '/', label: 'Home', end: true },
@@ -16,7 +16,7 @@ export default function Navbar() {
     <header className="nav">
       <div className="nav__inner">
         <Link to="/" className="nav__brand" onClick={() => setOpen(false)}>
-          <img src={logoLight} alt="Endless Clicks" />
+          <img src={logo} alt="Endless Clicks" />
         </Link>
 
         <button
@@ -41,9 +41,6 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
-          <Link className="btn btn--primary btn--sm" to="/events" onClick={() => setOpen(false)}>
-            View events
-          </Link>
         </nav>
       </div>
     </header>
