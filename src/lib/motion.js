@@ -1,7 +1,7 @@
-/** Safe entrance motion — transform only, never leaves content invisible. */
+/** Safe entrance — transform only, never opacity/clip that can stick. */
 export const enter = {
-  y: 18,
-  duration: 0.55,
+  y: 16,
+  duration: 0.5,
   ease: 'power2.out',
   clearProps: 'transform',
 }

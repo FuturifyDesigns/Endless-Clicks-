@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { enter, enterStagger } from '../lib/motion'
 import workflowPromo from '../assets/photos/workflow-promo.jpg'
 import workflowPlan from '../assets/photos/workflow-plan.jpg'
 
@@ -16,10 +17,12 @@ export default function Contact() {
     () => {
       const mm = gsap.matchMedia()
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-        tl.from('.contact-wrap > header > *', { x: -28, autoAlpha: 0, duration: 0.65, stagger: 0.08 })
-          .from('.contact-panel--info', { x: -40, autoAlpha: 0, duration: 0.7 }, '-=0.35')
-          .from('.contact-panel--form', { x: 40, autoAlpha: 0, duration: 0.7 }, '-=0.55')
+        gsap.from('.contact-wrap > header > *', { ...enterStagger })
+        gsap.from('.contact-panel--info, .contact-panel--form', {
+          ...enter,
+          delay: 0.1,
+          stagger: 0.08,
+        })
       })
       return () => mm.revert()
     },

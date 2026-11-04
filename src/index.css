@@ -91,6 +91,8 @@ h4 {
   letter-spacing: -0.02em;
   color: var(--black);
   font-stretch: 95%;
+  opacity: 1;
+  visibility: visible;
 }
 
 h1 {

@@ -4,6 +4,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { enterStagger } from '../lib/motion'
 import logo from '../assets/logo-transparent.png'
 import planning from '../assets/photos/planning.jpg'
 import consult from '../assets/photos/consult.jpg'
@@ -59,22 +60,8 @@ export default function About() {
     () => {
       const mm = gsap.matchMedia()
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.from('.about-hero__logo', {
-          scale: 0.86,
-          autoAlpha: 0,
-          duration: 0.9,
-          ease: 'back.out(1.4)',
-        })
-        gsap.from('.about-hero .eyebrow, .about-hero h1, .about-hero .lead', {
-          y: 30,
-          autoAlpha: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          delay: 0.15,
-          ease: 'power3.out',
-        })
+        gsap.from('.about-hero > *', { ...enterStagger })
 
-        const nodes = gsap.utils.toArray('.tree-node')
         const sap = treeRef.current?.querySelector('.tree__sap')
         if (sap) {
           gsap.fromTo(
@@ -92,13 +79,19 @@ export default function About() {
             },
           )
         }
-        gsap.set(nodes, { autoAlpha: 0, y: 24 })
-        ScrollTrigger.batch(nodes, {
-          start: 'top 88%',
-          onEnter: (batch) =>
-            gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.08, overwrite: 'auto' }),
-          onLeaveBack: (batch) =>
-            gsap.to(batch, { autoAlpha: 0, y: 16, duration: 0.28, overwrite: 'auto' }),
+
+        gsap.utils.toArray('.tree-node').forEach((node) => {
+          gsap.from(node, {
+            y: 24,
+            duration: 0.55,
+            ease: 'power2.out',
+            clearProps: 'transform',
+            scrollTrigger: {
+              trigger: node,
+              start: 'top 90%',
+              once: true,
+            },
+          })
         })
       })
       return () => mm.revert()

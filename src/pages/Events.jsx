@@ -2,17 +2,17 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import EventCard from '../components/EventCard'
 import { useEvents } from '../hooks/useEvents'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { getEventStatus } from '../lib/events'
+import { enter, enterStagger } from '../lib/motion'
 import venue from '../assets/photos/venue.jpg'
 import heroLive from '../assets/photos/hero-live.jpg'
 import workflowDeliver from '../assets/photos/workflow-deliver.jpg'
 import hosting from '../assets/photos/hosting.jpg'
 
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+gsap.registerPlugin(useGSAP)
 
 export default function Events() {
   const root = useRef(null)
@@ -26,50 +26,11 @@ export default function Events() {
     () => {
       const mm = gsap.matchMedia()
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-        tl.from('.events-hero__eyebrow', { y: 20, autoAlpha: 0, duration: 0.5 })
-          .from('.events-hero h1', { y: 48, autoAlpha: 0, duration: 0.85 }, '-=0.2')
-          .from('.events-hero__lead', { y: 24, autoAlpha: 0, duration: 0.55 }, '-=0.4')
-          .from('.events-hero__media', {
-            clipPath: 'inset(100% 0 0 0)',
-            duration: 1.1,
-            ease: 'power4.inOut',
-          }, '-=0.55')
-          .from('.events-hero__stats > *', {
-            y: 24,
-            autoAlpha: 0,
-            stagger: 0.08,
-            duration: 0.5,
-          }, '-=0.35')
-
-        gsap.to('.events-hero__media img', {
-          scale: 1.12,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.events-hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          },
-        })
-
-        gsap.utils.toArray('.events-spotlight').forEach((el) => {
-          gsap.fromTo(
-            el,
-            { autoAlpha: 0, y: 40, rotateX: 6 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              rotateX: 0,
-              duration: 0.8,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: el,
-                start: 'top 85%',
-                toggleActions: 'play reverse play reverse',
-              },
-            },
-          )
+        gsap.from('.events-hero__copy > *', { ...enterStagger })
+        gsap.from('.events-hero__media, .events-hero__stats > *', {
+          ...enter,
+          delay: 0.1,
+          stagger: 0.06,
         })
       })
       return () => mm.revert()
@@ -77,7 +38,7 @@ export default function Events() {
     { scope: root, dependencies: [loading] },
   )
 
-  useScrollReveal(root, '.reveal-card', [events.length, loading])
+  useScrollReveal(root, '.reveal-card, .events-spotlight', [events.length, loading])
 
   return (
     <div ref={root} className="page page--flush">

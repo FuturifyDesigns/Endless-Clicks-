@@ -2,7 +2,6 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Countdown from '../components/Countdown'
 import EventCard from '../components/EventCard'
 import AttendanceMeter from '../components/AttendanceMeter'
@@ -11,6 +10,7 @@ import InteractiveCard from '../components/InteractiveCard'
 import { useEvents } from '../hooks/useEvents'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { formatEventDate, getEventStatus } from '../lib/events'
+import { enter, enterStagger } from '../lib/motion'
 import logo from '../assets/logo-transparent.png'
 import heroLive from '../assets/photos/hero-live.jpg'
 import workflowDiscover from '../assets/photos/workflow-discover.jpg'
@@ -18,7 +18,7 @@ import workflowPlan from '../assets/photos/workflow-plan.jpg'
 import workflowPromo from '../assets/photos/workflow-promo.jpg'
 import checkin from '../assets/photos/checkin.jpg'
 
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+gsap.registerPlugin(useGSAP)
 
 export default function Home() {
   const root = useRef(null)
@@ -30,33 +30,8 @@ export default function Home() {
     () => {
       const mm = gsap.matchMedia()
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-        tl.from('.hero__brand', { y: 24, autoAlpha: 0, duration: 0.7 })
-          .from('.hero__copy .eyebrow, .hero__copy h1, .hero__copy .lead', {
-            y: 36,
-            autoAlpha: 0,
-            duration: 0.75,
-            stagger: 0.1,
-          }, '-=0.35')
-          .from('.hero__actions, .hero__meta', { y: 20, autoAlpha: 0, duration: 0.55, stagger: 0.08 }, '-=0.35')
-          .from('.hero__visual', {
-            clipPath: 'inset(12% 12% 12% 12% round 16px)',
-            scale: 1.08,
-            duration: 1.05,
-            ease: 'power2.inOut',
-          }, '-=0.85')
-          .from('.featured-panel', { y: 28, autoAlpha: 0, duration: 0.65 }, '-=0.55')
-
-        gsap.to('.hero__visual img', {
-          yPercent: 12,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          },
-        })
+        gsap.from('.hero__copy > *', { ...enterStagger })
+        gsap.from('.hero__visual, .featured-panel', { ...enter, delay: 0.08 })
       })
       return () => mm.revert()
     },
