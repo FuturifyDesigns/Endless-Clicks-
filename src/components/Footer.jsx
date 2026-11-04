@@ -25,9 +25,21 @@ export default function Footer() {
           <a href="mailto:hello@endlessclicks.co.za">hello@endlessclicks.co.za</a>
         </div>
       </div>
-      <p className="footer__copy">
-        © {new Date().getFullYear()} Endless Clicks Pty Ltd. All rights reserved.
-      </p>
+      <div className="footer__bottom">
+        <p className="footer__copy">
+          © {new Date().getFullYear()} Endless Clicks Pty Ltd. All rights reserved.
+        </p>
+        <p className="footer__credit">
+          Built by{' '}
+          <a
+            href="https://github.com/FuturifyDesigns"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Futurify Designs
+          </a>
+        </p>
+      </div>
     </footer>
   )
 }

@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Events from './pages/Events'
@@ -9,7 +9,7 @@ import Admin from './pages/Admin'
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
@@ -21,6 +21,6 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
