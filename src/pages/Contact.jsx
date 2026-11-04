@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { enterStagger } from '../lib/motion'
 
 gsap.registerPlugin(useGSAP)
 
@@ -10,13 +11,7 @@ export default function Contact() {
 
   useGSAP(
     () => {
-      gsap.from('.contact-wrap > *', {
-        y: 20,
-        opacity: 0,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: 'power2.out',
-      })
+      gsap.from('.contact-wrap > *', { ...enterStagger })
     },
     { scope: root },
   )

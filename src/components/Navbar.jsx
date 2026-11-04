@@ -14,7 +14,6 @@ export default function Navbar() {
 
   return (
     <header className="nav">
-      <div className="flag-bar" aria-hidden="true" />
       <div className="nav__inner">
         <Link to="/" className="nav__brand" onClick={() => setOpen(false)}>
           <img src={logoLight} alt="Endless Clicks" />

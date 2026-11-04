@@ -2,16 +2,16 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Countdown from '../components/Countdown'
 import EventCard from '../components/EventCard'
 import AttendanceMeter from '../components/AttendanceMeter'
 import LiveBadge from '../components/LiveBadge'
 import { useEvents } from '../hooks/useEvents'
 import { formatEventDate, getEventStatus } from '../lib/events'
+import { enter, enterStagger } from '../lib/motion'
 import logoLight from '../assets/logo-light.jpg'
 
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+gsap.registerPlugin(useGSAP)
 
 export default function Home() {
   const root = useRef(null)
@@ -21,28 +21,8 @@ export default function Home() {
 
   useGSAP(
     () => {
-      gsap.from('.hero__copy > *', {
-        y: 22,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: 'power2.out',
-      })
-      gsap.from('.featured-panel', {
-        y: 24,
-        opacity: 0,
-        duration: 0.75,
-        delay: 0.12,
-        ease: 'power2.out',
-      })
-      gsap.from('.reveal', {
-        scrollTrigger: { trigger: '.reveal', start: 'top 88%' },
-        y: 28,
-        opacity: 0,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: 'power2.out',
-      })
+      gsap.from('.hero__copy > *', { ...enterStagger })
+      gsap.from('.featured-panel', { ...enter, delay: 0.08 })
     },
     { scope: root, dependencies: [loading, featured?.id] },
   )
@@ -142,7 +122,7 @@ export default function Home() {
 
       <section className="band-soft">
         <div className="section">
-          <div className="section__head reveal">
+          <div className="section__head">
             <p className="eyebrow">What we deliver</p>
             <h2>A full-service event partner, not just a flyer.</h2>
             <p>
@@ -152,7 +132,7 @@ export default function Home() {
             </p>
           </div>
           <div className="services-grid">
-            <article className="info-card reveal">
+            <article className="info-card">
               <p className="info-card__num">Service 01</p>
               <h3>Event hosting</h3>
               <p>
@@ -160,7 +140,7 @@ export default function Home() {
                 host support so the day runs calmly and professionally.
               </p>
             </article>
-            <article className="info-card reveal">
+            <article className="info-card">
               <p className="info-card__num">Service 02</p>
               <h3>Event planning</h3>
               <p>
@@ -168,7 +148,7 @@ export default function Home() {
                 documents, and clear ownership from kickoff to wrap.
               </p>
             </article>
-            <article className="info-card reveal">
+            <article className="info-card">
               <p className="info-card__num">Service 03</p>
               <h3>Event advertising</h3>
               <p>
@@ -181,7 +161,7 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <div className="section__head reveal">
+        <div className="section__head">
           <p className="eyebrow">How registration works</p>
           <h2>Guests confirm. You see the room fill.</h2>
           <p>
@@ -190,22 +170,22 @@ export default function Home() {
           </p>
         </div>
         <div className="info-grid">
-          <article className="info-card reveal">
+          <article className="info-card">
             <p className="info-card__num">Step 01</p>
             <h3>Publish the event</h3>
             <p>Add title, venue, times, capacity, and description from the admin panel.</p>
           </article>
-          <article className="info-card reveal">
+          <article className="info-card">
             <p className="info-card__num">Step 02</p>
             <h3>Share the page</h3>
             <p>Guests open the event page, review details, and register that they are attending.</p>
           </article>
-          <article className="info-card reveal">
+          <article className="info-card">
             <p className="info-card__num">Step 03</p>
             <h3>Track live counts</h3>
             <p>Attendance numbers update publicly while full guest lists stay in Admin.</p>
           </article>
-          <article className="info-card reveal">
+          <article className="info-card">
             <p className="info-card__num">Step 04</p>
             <h3>Host with clarity</h3>
             <p>Use the list for check-in, seating, catering numbers, and follow-up.</p>
@@ -216,7 +196,7 @@ export default function Home() {
       <section className="band">
         <div className="section">
           <div className="split split--wide">
-            <div className="reveal">
+            <div>
               <p className="eyebrow">Why Endless Clicks</p>
               <h2>Built for turnout, timing, and trust.</h2>
               <p>
@@ -231,7 +211,7 @@ export default function Home() {
                 <li>A queue system that always features the next relevant event</li>
               </ul>
             </div>
-            <div className="stat-row reveal">
+            <div className="stat-row">
               <div className="stat-box">
                 <strong>3</strong>
                 <span>Core service pillars</span>
@@ -250,7 +230,7 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <div className="section__head reveal">
+        <div className="section__head">
           <p className="eyebrow">Current lineup</p>
           <h2>Upcoming & live events</h2>
           <p>
@@ -262,19 +242,19 @@ export default function Home() {
           <>
             <div className="event-grid">
               {events.slice(0, 3).map((event) => (
-                <div className="reveal" key={event.id}>
+                <div key={event.id}>
                   <EventCard event={event} stat={stats[event.id]} now={now} />
                 </div>
               ))}
             </div>
-            <div className="section__cta reveal">
+            <div className="section__cta">
               <Link className="btn btn--ghost" to="/events">
                 See all events
               </Link>
             </div>
           </>
         ) : (
-          <div className="empty-state reveal">
+          <div className="empty-state">
             <h3>Lineup coming soon</h3>
             <p className="muted">
               There are no published events at the moment. Check back shortly, or contact
@@ -289,24 +269,24 @@ export default function Home() {
 
       <section className="band-soft">
         <div className="section">
-          <div className="section__head reveal">
+          <div className="section__head">
             <p className="eyebrow">Working process</p>
             <h2>From brief to packed room</h2>
           </div>
           <div className="process-steps">
-            <article className="process-step reveal">
+            <article className="process-step">
               <h3>Discovery</h3>
               <p>We align on goals, audience, date options, budget range, and success metrics.</p>
             </article>
-            <article className="process-step reveal">
+            <article className="process-step">
               <h3>Planning</h3>
               <p>We lock venue flow, programme structure, vendors, and communication timeline.</p>
             </article>
-            <article className="process-step reveal">
+            <article className="process-step">
               <h3>Promotion</h3>
               <p>We publish the event, drive registrations, and keep reminders consistent.</p>
             </article>
-            <article className="process-step reveal">
+            <article className="process-step">
               <h3>Delivery</h3>
               <p>We host the experience, track attendance, and hand over clear wrap notes.</p>
             </article>
@@ -316,7 +296,7 @@ export default function Home() {
 
       <section className="section">
         <div className="split">
-          <div className="reveal">
+          <div>
             <p className="eyebrow">Quick answers</p>
             <h2>Common questions</h2>
             <div className="faq">
@@ -343,7 +323,7 @@ export default function Home() {
               </details>
             </div>
           </div>
-          <div className="info-card reveal">
+          <div className="info-card">
             <p className="eyebrow">Next step</p>
             <h2>Ready to plan your event?</h2>
             <p>

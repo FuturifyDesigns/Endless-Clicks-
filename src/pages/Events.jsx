@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react'
 import EventCard from '../components/EventCard'
 import { useEvents } from '../hooks/useEvents'
 import { getEventStatus } from '../lib/events'
+import { enterStagger } from '../lib/motion'
 
 gsap.registerPlugin(useGSAP)
 
@@ -18,23 +19,9 @@ export default function Events() {
 
   useGSAP(
     () => {
-      gsap.from('.page-hero > *', {
-        y: 18,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.07,
-        ease: 'power2.out',
-      })
-      gsap.from('.event-card, .empty-state, .info-card', {
-        y: 22,
-        opacity: 0,
-        duration: 0.55,
-        stagger: 0.06,
-        delay: 0.1,
-        ease: 'power2.out',
-      })
+      gsap.from('.page-hero > *', { ...enterStagger })
     },
-    { scope: root, dependencies: [loading, events.length] },
+    { scope: root, dependencies: [loading] },
   )
 
   return (

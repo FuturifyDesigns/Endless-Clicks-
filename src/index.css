@@ -277,19 +277,6 @@ main {
   background: var(--black);
 }
 
-/* FLAG STRIPE */
-.flag-bar {
-  height: 10px;
-  background: linear-gradient(
-    90deg,
-    var(--blue) 0 38%,
-    var(--white) 38% 42%,
-    var(--black) 42% 58%,
-    var(--white) 58% 62%,
-    var(--blue) 62% 100%
-  );
-}
-
 /* HERO */
 .hero {
   padding: 3.5rem 0 2rem;

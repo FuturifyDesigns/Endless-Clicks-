@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { enterStagger } from '../lib/motion'
 import logoLight from '../assets/logo-light.jpg'
 
 gsap.registerPlugin(useGSAP)
@@ -11,21 +12,7 @@ export default function About() {
 
   useGSAP(
     () => {
-      gsap.from('.about-hero > *', {
-        y: 20,
-        opacity: 0,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: 'power2.out',
-      })
-      gsap.from('.reveal', {
-        y: 24,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.07,
-        delay: 0.15,
-        ease: 'power2.out',
-      })
+      gsap.from('.about-hero > *', { ...enterStagger })
     },
     { scope: root },
   )
@@ -45,7 +32,7 @@ export default function About() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="split split--wide">
-          <div className="content-block reveal">
+          <div className="content-block">
             <p className="eyebrow">Our purpose</p>
             <h2>Events should feel organised, welcoming, and worth the trip.</h2>
             <p>
@@ -59,7 +46,7 @@ export default function About() {
               to deliver that outcome.
             </p>
           </div>
-          <div className="stat-row reveal">
+          <div className="stat-row">
             <div className="stat-box">
               <strong>Host</strong>
               <span>On-site delivery</span>
@@ -78,7 +65,7 @@ export default function About() {
 
       <section className="band-soft">
         <div className="section">
-          <div className="section__head reveal">
+          <div className="section__head">
             <p className="eyebrow">What we do</p>
             <h2>Three connected services</h2>
             <p>
@@ -87,7 +74,7 @@ export default function About() {
             </p>
           </div>
           <div className="about-grid">
-            <article className="about-card reveal">
+            <article className="about-card">
               <h3>Hosting</h3>
               <p>
                 We manage guest arrival, seating flow, stage cues, partner logistics, and
@@ -99,7 +86,7 @@ export default function About() {
                 <li>Vendor liaison on site</li>
               </ul>
             </article>
-            <article className="about-card reveal">
+            <article className="about-card">
               <h3>Planning</h3>
               <p>
                 From concept to run-of-show, we translate ambition into an executable plan with
@@ -111,7 +98,7 @@ export default function About() {
                 <li>Risk and contingency notes</li>
               </ul>
             </article>
-            <article className="about-card reveal">
+            <article className="about-card">
               <h3>Advertising</h3>
               <p>
                 We promote upcoming events with clear calls to action, registration capture,
@@ -128,24 +115,24 @@ export default function About() {
       </section>
 
       <section className="section">
-        <div className="section__head reveal">
+        <div className="section__head">
           <p className="eyebrow">Who we serve</p>
           <h2>Built for teams that need reliable turnout</h2>
         </div>
         <div className="info-grid">
-          <article className="info-card reveal">
+          <article className="info-card">
             <h3>Brands & agencies</h3>
             <p>Product launches, partner evenings, showcase nights, and campaign activations.</p>
           </article>
-          <article className="info-card reveal">
+          <article className="info-card">
             <h3>Corporates</h3>
             <p>Town halls, leadership sessions, client forums, and internal celebrations.</p>
           </article>
-          <article className="info-card reveal">
+          <article className="info-card">
             <h3>Communities</h3>
             <p>Public programmes, cultural gatherings, fundraisers, and civic events.</p>
           </article>
-          <article className="info-card reveal">
+          <article className="info-card">
             <h3>Venues & promoters</h3>
             <p>Partners who need stronger guest communication and registration discipline.</p>
           </article>
@@ -155,7 +142,7 @@ export default function About() {
       <section className="band">
         <div className="section">
           <div className="split">
-            <div className="reveal">
+            <div>
               <p className="eyebrow">How this website supports events</p>
               <h2>A living event board for your audience</h2>
               <p>
@@ -165,7 +152,7 @@ export default function About() {
                 in Admin.
               </p>
             </div>
-            <div className="reveal">
+            <div>
               <ul className="list-check">
                 <li>Public event pages with essential details</li>
                 <li>Registration forms for guest information</li>
@@ -182,7 +169,7 @@ export default function About() {
 
       <section className="section">
         <div className="split">
-          <div className="info-card reveal">
+          <div className="info-card">
             <p className="eyebrow">Values</p>
             <h2>Clarity over hype</h2>
             <p>
@@ -191,7 +178,7 @@ export default function About() {
               the final thank-you.
             </p>
           </div>
-          <div className="info-card reveal">
+          <div className="info-card">
             <p className="eyebrow">Work with us</p>
             <h2>Tell us what you are planning</h2>
             <p>

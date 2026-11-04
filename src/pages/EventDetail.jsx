@@ -8,6 +8,7 @@ import AttendanceMeter from '../components/AttendanceMeter'
 import RegisterForm from '../components/RegisterForm'
 import { useEvent } from '../hooks/useEvents'
 import { formatEventDate, getEventStatus } from '../lib/events'
+import { enter, enterStagger } from '../lib/motion'
 import { supabase } from '../lib/supabase'
 
 gsap.registerPlugin(useGSAP)
@@ -25,20 +26,8 @@ export default function EventDetail() {
   useGSAP(
     () => {
       if (!event) return
-      gsap.from('.detail-hero > *', {
-        y: 24,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: 'power2.out',
-      })
-      gsap.from('.detail-panel', {
-        y: 28,
-        opacity: 0,
-        duration: 0.75,
-        delay: 0.1,
-        ease: 'power2.out',
-      })
+      gsap.from('.detail-hero > *', { ...enterStagger })
+      gsap.from('.detail-panel', { ...enter, delay: 0.08, stagger: 0.06 })
     },
     { scope: root, dependencies: [event?.id] },
   )
