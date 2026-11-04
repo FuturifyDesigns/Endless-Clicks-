@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -9,7 +9,6 @@ import RegisterForm from '../components/RegisterForm'
 import { useEvent } from '../hooks/useEvents'
 import { formatEventDate, getEventStatus } from '../lib/events'
 import { supabase } from '../lib/supabase'
-import { useState } from 'react'
 
 gsap.registerPlugin(useGSAP)
 
